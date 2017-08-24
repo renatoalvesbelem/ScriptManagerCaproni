@@ -69,7 +69,7 @@ public class MainView extends JFrame {
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooser().directoryChooser();
-				txFilePath.setText(String.format("", chooser.getSelectedFile()));
+				txFilePath.setText(chooser.getSelectedFile().getPath());
 			}
 		});
 		btnSelecione.setBounds(658, 39, 113, 25);

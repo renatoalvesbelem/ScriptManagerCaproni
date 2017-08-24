@@ -66,7 +66,7 @@ public class CaproniConfigurationView extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooser().directoryChooser();
-				txCaproniPath.setText(String.format("", chooser.getSelectedFile()));
+				txCaproniPath.setText(chooser.getSelectedFile().getPath());
 			
 			}
 		});
