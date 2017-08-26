@@ -3,11 +3,12 @@ package br.com.scriptmanagercaproni.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "CaproniConfig")
+@XmlRootElement(name = "caproniConfig")
 public class CaproniFolderModel {
-	@XmlElement(name = "folder-path", required = true)
+
 	private String pathFolder;
 
+	@XmlElement(name = "caproniFolder")
 	public String getPathFolder() {
 		return pathFolder;
 	}

@@ -66,6 +66,7 @@ public class CaproniConfigurationView extends JFrame {
 		txCaproniPath.setBounds(108, 12, 275, 19);
 		contentPane.add(txCaproniPath);
 		txCaproniPath.setColumns(10);
+		txCaproniPath.setEditable(false);
 		txCaproniPath.setText(caproniConfigurationControl.getPath());
 		JButton button = new JButton("...");
 		button.addActionListener(new ActionListener() {
@@ -87,6 +88,11 @@ public class CaproniConfigurationView extends JFrame {
 		contentPane.add(btFechar);
 
 		btSalvar = new JButton("Salvar");
+		btSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				caproniConfigurationControl.saveFile(txCaproniPath.getText());
+			}
+		});
 		btSalvar.setBounds(24, 230, 98, 25);
 		contentPane.add(btSalvar);
 	}
