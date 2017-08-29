@@ -13,8 +13,8 @@ public class ScriptFolderControl {
 	public HashMap<String, String> getSystemDirectoriesAndName() {
 		HashMap<String, String> listaArquivos = new HashMap<String, String>();
 		for (File arquivo : file.listFiles()) {
-			if(arquivo.isDirectory())
-			listaArquivos.put( arquivo.getAbsolutePath(),arquivo.getName());
+			if (arquivo.isDirectory())
+				listaArquivos.put(arquivo.getAbsolutePath(), arquivo.getName());
 		}
 		return listaArquivos;
 	}

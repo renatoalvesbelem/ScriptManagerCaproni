@@ -1,16 +1,10 @@
 package br.com.scriptmanagercaproni.view;
 
-import java.awt.ComponentOrientation;
 import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import br.com.scriptmanagercaproni.components.FileChooser;
-import br.com.scriptmanagercaproni.control.ScriptFolderControl;
+import br.com.scriptmanagercaproni.components.PanelCheckBox;
 
 public class MainView extends JFrame {
 	private static final long serialVersionUID = 8862157956341479195L;
@@ -77,8 +71,10 @@ public class MainView extends JFrame {
 
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new FileChooser().directoryChooser();
-				txFilePath.setText(chooser.getSelectedFile().getPath());
+				JFileChooser chooser = new FileChooser();
+				String pathScriptFolder = chooser.getSelectedFile().getPath();
+				txFilePath.setText(pathScriptFolder);
+				createPanelCheckBox(pathScriptFolder);
 			}
 		});
 		btnSelecione.setBounds(658, 39, 113, 25);
@@ -89,35 +85,12 @@ public class MainView extends JFrame {
 		contentPane.add(txFilePath);
 		txFilePath.setColumns(10);
 
-		JPanel panelCheckBox = new JPanel();
-		panelCheckBox.setBounds(44, 71, 719, 350);
+	}
+
+	public void createPanelCheckBox(String pahtScript) {
+		JPanel panelCheckBox = new PanelCheckBox(pahtScript);
 		contentPane.add(panelCheckBox);
-
-		panelCheckBox.setLayout(new GridBagLayout());
-		List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
-		ScriptFolderControl scriptFolderControl = new ScriptFolderControl("/home/renato/Downloads");
-		GridBagConstraints c = new GridBagConstraints();
-		contentPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		c.fill = GridBagConstraints.VERTICAL;
-		c.anchor = GridBagConstraints.WEST;
-		int x = 1;
-		int y = 1;
-		for (String element : scriptFolderControl.getSystemDirectoriesAndName().values()) {
-
-			JCheckBox box = new JCheckBox(element);
-			checkboxes.add(box);
-			c.weightx = 0.5;
-			c.gridx = x;
-			c.gridy = y;
-			panelCheckBox.add(box, c);
-			if (y>=10) {
-				x++;
-				y = 0;
-			}
-			y++;
-
-		}
-
+		contentPane.validate();
 
 	}
 
