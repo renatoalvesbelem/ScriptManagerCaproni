@@ -94,17 +94,6 @@ public class MainView extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelCheckBox.setBounds(44, 71, 719, 43);
 		contentPane.add(panelCheckBox);
-
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCheckBox.removeAll();
-				panelCheckBox.validate();
-				panelCheckBox.repaint();
-			}
-		});
-		btnNewButton.setBounds(24, 468, 98, 25);
-		contentPane.add(btnNewButton);
 	}
 
 	public void createPanelCheckBox(String pahtScript) {
