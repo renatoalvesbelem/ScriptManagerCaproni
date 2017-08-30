@@ -14,18 +14,16 @@ import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 public class PanelCheckBox extends JPanel {
 	private static final long serialVersionUID = -6774516887777060499L;
 
-	public PanelCheckBox(String folder) {
-		this.setBounds(44, 71, 719, 350);
-
+	public void createCheckBox(String folder) {
 		this.setLayout(new GridBagLayout());
 		List<JCheckBox> checkboxes = new ArrayList<JCheckBox>();
 		ScriptFolderControl scriptFolderControl = new ScriptFolderControl(folder);
 		GridBagConstraints c = new GridBagConstraints();
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		c.fill = GridBagConstraints.VERTICAL;
-		c.anchor = GridBagConstraints.WEST;
-		int x = 1;
-		int y = 1;
+		c.anchor = GridBagConstraints.NORTHWEST;
+		int x = 0;
+		int y = 0;
 		for (String element : scriptFolderControl.getSystemDirectoriesAndName().values()) {
 
 			JCheckBox box = new JCheckBox(element);
@@ -34,9 +32,9 @@ public class PanelCheckBox extends JPanel {
 			c.gridx = x;
 			c.gridy = y;
 			this.add(box, c);
-			if (y >= 10) {
+			if (y >= 6) {
 				x++;
-				y = 0;
+				y = -1;
 			}
 			y++;
 
