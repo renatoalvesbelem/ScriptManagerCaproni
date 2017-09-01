@@ -1,5 +1,6 @@
 package br.com.scriptmanagercaproni.components;
 
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,5 +41,15 @@ public class PanelCheckBox extends JPanel {
 
 		}
 
+	}
+
+	public ArrayList<String> getListCheckBoxSelected() {
+		ArrayList<String> listaCheckBox = new ArrayList<String>();
+		for (Component checkbox : this.getComponents()) {
+			if (checkbox instanceof JCheckBox & ((JCheckBox) checkbox).isSelected()) {
+				listaCheckBox.add(((JCheckBox) checkbox).getText());
+			}
+		}
+		return listaCheckBox;
 	}
 }
