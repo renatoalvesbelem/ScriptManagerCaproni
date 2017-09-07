@@ -3,6 +3,8 @@ package br.com.scriptmanagercaproni.control;
 import java.io.File;
 import java.util.HashMap;
 
+import br.com.scriptmanagercaproni.parameter.DataBaseFolders;
+import br.com.scriptmanagercaproni.parameter.DataBaseType;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class ScriptFolderControl {
@@ -36,4 +38,51 @@ public class ScriptFolderControl {
 		}
 
 	}
+
+	public void createDirectoryDestination(String databaseType, String instancia) {
+		String[] folders;
+		if (databaseType.equals(DataBaseType.ORACLE)) {
+			if (instancia.equals(DataBaseType.PG)) {
+				folders = DataBaseFolders.FOLDER_ORACLEPG;
+			} else {
+				folders = DataBaseFolders.FOLDER_ORACLESG;
+
+			}
+		} else if (databaseType.equals(DataBaseType.SQLSERVER)) {
+			if (instancia.equals(DataBaseType.PG)) {
+				folders = DataBaseFolders.FOLDER_SQLSERVERPG;
+			} else {
+				folders = DataBaseFolders.FOLDER_SQLSERVERSG;
+			}
+		} else {
+			if (instancia.equals(DataBaseType.PG)) {
+				folders = DataBaseFolders.FOLDER_DB2PG;
+			} else {
+				folders = DataBaseFolders.FOLDER_ORACLESG;
+
+			}
+		}
+
+		try {
+			String folderCaproni = file.getAbsolutePath();
+
+			remover(new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT));
+			new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT).mkdir();
+			for (String folder : folders) {
+				new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT + folder).mkdir();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	   private void remover (File f) {
+	        if (f.isDirectory()) {
+	            File[] files = f.listFiles();
+	            for (int i = 0; i < files.length; ++i) {
+	                remover (files[i]);
+	            }
+	        }
+	        f.delete();
+	    }
 }

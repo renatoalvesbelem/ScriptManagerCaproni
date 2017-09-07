@@ -70,7 +70,7 @@ public class DatabaseConfigurationView extends JFrame {
 		contentPane.add(txDatabaseFile);
 		txDatabaseFile.setColumns(10);
 		
-		JButton button = new JButton("...");
+		JButton button = new JButton("...");	
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooserFile();

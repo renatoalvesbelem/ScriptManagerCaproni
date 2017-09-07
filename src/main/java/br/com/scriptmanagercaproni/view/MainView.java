@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -21,16 +22,23 @@ import javax.swing.border.TitledBorder;
 
 import br.com.scriptmanagercaproni.components.FileChooserDirectory;
 import br.com.scriptmanagercaproni.components.PanelCheckBox;
+import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
+import br.com.scriptmanagercaproni.control.ScriptFolderControl;
+import br.com.scriptmanagercaproni.parameter.DataBaseType;
+import br.com.scriptmanagercaproni.parameter.SystemParameter;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class MainView extends JFrame {
 	private static final long serialVersionUID = 8862157956341479195L;
 	private JPanel contentPane;
 	private JTextField txFilePath;
 	private PanelCheckBox panelCheckBox;
-
+	CaproniConfigurationControl caproniConfigurationControl;
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = true;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -95,19 +103,11 @@ public class MainView extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelCheckBox.setBounds(44, 71, 719, 43);
 		contentPane.add(panelCheckBox);
-
-		JButton btnExecute = new JButton("Execute");
-		btnExecute.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				panelCheckBox.getListCheckBoxSelected();
-			}
-		});
-		btnExecute.setBounds(44, 509, 98, 25);
-		contentPane.add(btnExecute);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(44, 328, 577, 24);
-		contentPane.add(comboBox);
+		final JComboBox cbDatabaseType = new JComboBox();
+		cbDatabaseType.setModel(new DefaultComboBoxModel(DataBaseType.ALL_TYPES));
+		cbDatabaseType.setBounds(44, 328, 577, 24);
+		contentPane.add(cbDatabaseType);
 		
 		JButton btnAdicionarBase = new JButton("Adicionar Base");
 		btnAdicionarBase.addActionListener(new ActionListener() {
@@ -117,6 +117,32 @@ public class MainView extends JFrame {
 		});
 		btnAdicionarBase.setBounds(643, 328, 120, 25);
 		contentPane.add(btnAdicionarBase);
+
+		JButton btnExecute = new JButton("Execute");
+		btnExecute.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ScriptFolderControl(new CaproniConfigurationControl().getPath()).createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),buttonGroup.getSelection().getActionCommand());
+				
+			}
+		});
+		btnExecute.setBounds(44, 509, 98, 25);
+		contentPane.add(btnExecute);
+		
+		JRadioButton rbPG = new JRadioButton(DataBaseType.PG);
+		buttonGroup.add(rbPG);
+		rbPG.setBounds(21, 373, 121, 23);
+		rbPG.setSelected(true);
+		rbPG.setActionCommand(DataBaseType.PG);
+		contentPane.add(rbPG);
+		
+		JRadioButton rbSG = new JRadioButton(DataBaseType.SG);
+		buttonGroup.add(rbSG);
+		rbSG.setBounds(21, 394, 121, 23);
+		rbSG.setActionCommand(DataBaseType.SG);
+		contentPane.add(rbSG);
+
+	
+	
 	}
 
 	public void createPanelCheckBox(String pahtScript) {
