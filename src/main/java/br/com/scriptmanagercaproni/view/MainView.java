@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import br.com.scriptmanagercaproni.components.FileChooser;
+import br.com.scriptmanagercaproni.components.FileChooserDirectory;
 import br.com.scriptmanagercaproni.components.PanelCheckBox;
 
 public class MainView extends JFrame {
@@ -68,24 +69,24 @@ public class MainView extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblScript = new JLabel("Script Folder");
-		lblScript.setBounds(24, 44, 86, 15);
+		lblScript.setBounds(44, 44, 86, 15);
 		contentPane.add(lblScript);
 
-		JButton btnSelecione = new JButton("Selecione...");
+		JButton btnSelecione = new JButton("...");
 
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new FileChooser();
+				JFileChooser chooser = new FileChooserDirectory();
 				String pathScriptFolder = chooser.getSelectedFile().getPath();
 				txFilePath.setText(pathScriptFolder);
 				createPanelCheckBox(pathScriptFolder);
 			}
 		});
-		btnSelecione.setBounds(658, 39, 113, 25);
+		btnSelecione.setBounds(720, 39, 43, 25);
 		contentPane.add(btnSelecione);
 
 		txFilePath = new JTextField();
-		txFilePath.setBounds(111, 42, 535, 19);
+		txFilePath.setBounds(134, 42, 563, 19);
 		contentPane.add(txFilePath);
 		txFilePath.setColumns(10);
 
@@ -101,8 +102,21 @@ public class MainView extends JFrame {
 				panelCheckBox.getListCheckBoxSelected();
 			}
 		});
-		btnExecute.setBounds(24, 509, 98, 25);
+		btnExecute.setBounds(44, 509, 98, 25);
 		contentPane.add(btnExecute);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(44, 328, 577, 24);
+		contentPane.add(comboBox);
+		
+		JButton btnAdicionarBase = new JButton("Adicionar Base");
+		btnAdicionarBase.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			new DatabaseConfigurationView().setVisible(true);
+			}
+		});
+		btnAdicionarBase.setBounds(643, 328, 120, 25);
+		contentPane.add(btnAdicionarBase);
 	}
 
 	public void createPanelCheckBox(String pahtScript) {
