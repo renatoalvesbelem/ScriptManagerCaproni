@@ -2,7 +2,6 @@ package br.com.scriptmanagercaproni.control;
 
 import java.io.File;
 import java.util.HashMap;
-
 import br.com.scriptmanagercaproni.parameter.DataBaseFolders;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
@@ -34,7 +33,6 @@ public class ScriptFolderControl {
 
 		} catch (NullPointerException e) {
 			return false;
-
 		}
 
 	}
@@ -65,7 +63,6 @@ public class ScriptFolderControl {
 
 		try {
 			String folderCaproni = file.getAbsolutePath();
-
 			remover(new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT));
 			new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT).mkdir();
 			for (String folder : folders) {
@@ -76,13 +73,15 @@ public class ScriptFolderControl {
 			// TODO: handle exception
 		}
 	}
-	   private void remover (File f) {
-	        if (f.isDirectory()) {
-	            File[] files = f.listFiles();
-	            for (int i = 0; i < files.length; ++i) {
-	                remover (files[i]);
-	            }
-	        }
-	        f.delete();
-	    }
+
+	private void remover(File files) {
+		for (File file : files.listFiles()) {
+			if (file.isDirectory()) {
+				for (File archive : files.listFiles()) {
+					remover(archive);
+				}
+			}
+			file.delete();
+		}
+	}
 }
