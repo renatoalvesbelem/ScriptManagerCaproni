@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import br.com.scriptmanagercaproni.components.FileChooserDirectory;
 import br.com.scriptmanagercaproni.components.FileChooserFile;
 import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
 
@@ -24,8 +23,9 @@ public class DatabaseConfigurationView extends JFrame {
 	 */
 	private static final long serialVersionUID = -7439009097407169326L;
 	private JPanel contentPane;
+	@SuppressWarnings("unused")
 	private CaproniConfigurationControl caproniConfigurationControl;
-	private JComboBox comboBox;
+	private JComboBox<String> comboBox;
 	private JTextField txDatabaseFile;
 
 	/**
@@ -57,7 +57,7 @@ public class DatabaseConfigurationView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		comboBox = new JComboBox();
+		comboBox = new JComboBox<String>();
 		comboBox.setBounds(121, 42, 414, 24);
 		contentPane.add(comboBox);
 		

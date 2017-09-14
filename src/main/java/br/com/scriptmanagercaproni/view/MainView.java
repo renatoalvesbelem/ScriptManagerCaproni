@@ -25,7 +25,6 @@ import br.com.scriptmanagercaproni.components.PanelCheckBox;
 import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
 import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
-import br.com.scriptmanagercaproni.parameter.SystemParameter;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
@@ -67,7 +66,6 @@ public class MainView extends JFrame {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CaproniConfigurationView().setVisible(true);
-
 			}
 		});
 		mnConfiguracoes.add(mntmNewMenuItem);
@@ -81,7 +79,6 @@ public class MainView extends JFrame {
 		contentPane.add(lblScript);
 
 		JButton btnSelecione = new JButton("...");
-
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooserDirectory();
@@ -103,16 +100,16 @@ public class MainView extends JFrame {
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panelCheckBox.setBounds(44, 71, 719, 43);
 		contentPane.add(panelCheckBox);
-		
-		final JComboBox cbDatabaseType = new JComboBox();
-		cbDatabaseType.setModel(new DefaultComboBoxModel(DataBaseType.ALL_TYPES));
+
+		final JComboBox<String> cbDatabaseType = new JComboBox<String>();
+		cbDatabaseType.setModel(new DefaultComboBoxModel<String>(DataBaseType.ALL_TYPES));
 		cbDatabaseType.setBounds(44, 328, 577, 24);
 		contentPane.add(cbDatabaseType);
-		
+
 		JButton btnAdicionarBase = new JButton("Adicionar Base");
 		btnAdicionarBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			new DatabaseConfigurationView().setVisible(true);
+				new DatabaseConfigurationView().setVisible(true);
 			}
 		});
 		btnAdicionarBase.setBounds(643, 328, 120, 25);
@@ -121,28 +118,25 @@ public class MainView extends JFrame {
 		JButton btnExecute = new JButton("Execute");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ScriptFolderControl(new CaproniConfigurationControl().getPath()).createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),buttonGroup.getSelection().getActionCommand());
-				
+				new ScriptFolderControl(new CaproniConfigurationControl().getPath()).createDirectoryDestination(
+						cbDatabaseType.getSelectedItem().toString(), buttonGroup.getSelection().getActionCommand());
 			}
 		});
 		btnExecute.setBounds(44, 509, 98, 25);
 		contentPane.add(btnExecute);
-		
+
 		JRadioButton rbPG = new JRadioButton(DataBaseType.PG);
 		buttonGroup.add(rbPG);
 		rbPG.setBounds(21, 373, 121, 23);
 		rbPG.setSelected(true);
 		rbPG.setActionCommand(DataBaseType.PG);
 		contentPane.add(rbPG);
-		
+
 		JRadioButton rbSG = new JRadioButton(DataBaseType.SG);
 		buttonGroup.add(rbSG);
 		rbSG.setBounds(21, 394, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
 		contentPane.add(rbSG);
-
-	
-	
 	}
 
 	public void createPanelCheckBox(String pahtScript) {
@@ -160,26 +154,21 @@ public class MainView extends JFrame {
 		case 0:
 			height = 43;
 			break;
-
 		case 1:
 			height = 43;
 			break;
-
 		case 2:
 			height = 83;
 			break;
-
 		case 3:
 			height = 103;
 			break;
-
 		case 4:
 			height = 123;
 			break;
 		case 5:
 			height = 153;
 			break;
-
 		default:
 			height = 193;
 			break;
