@@ -10,10 +10,11 @@ import java.util.List;
 import br.com.objectfile.xml.ObjectToXML;
 import br.com.scriptmanagercaproni.model.DatabaseModel;
 import br.com.scriptmanagercaproni.model.ListDatabaseModel;
+import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class DatabaseCatalogControl {
 
-	public void catalogDatabase(String nameFile, File arquivoOrigem) {
+	public void catalogDatabase(File arquivoOrigem, String nameFileDest) {
 		ListDatabaseModel listDatabaseModel = new ListDatabaseModel();
 
 		try {
@@ -21,11 +22,11 @@ public class DatabaseCatalogControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveFile(listDatabaseModel);
+		saveFile(listDatabaseModel, nameFileDest.trim().replaceAll(" ", "_"));
 	}
 
-	private void saveFile(ListDatabaseModel listDatabaseModel) {
-		new ObjectToXML().createXML(listDatabaseModel, "database.conf");
+	private void saveFile(ListDatabaseModel listDatabaseModel, String nameFileDest) {
+		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_INI_EXT);
 	}
 
 	private List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
