@@ -152,10 +152,8 @@ public class MainView extends JFrame {
 		switch (panelCheckBox.getComponentCount()) {
 
 		case 0:
-			height = 43;
 			break;
 		case 1:
-			height = 43;
 			break;
 		case 2:
 			height = 83;

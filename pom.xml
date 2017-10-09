@@ -4,7 +4,7 @@
 
 	<groupId>system-tools</groupId>
 	<artifactId>ScriptManagerCaproni</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>01.02.00-00</version>
 	<packaging>jar</packaging>
 
 	<name>ScriptManagerCaproni</name>
