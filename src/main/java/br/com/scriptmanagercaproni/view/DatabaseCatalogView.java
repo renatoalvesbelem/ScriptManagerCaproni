@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,9 +17,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import br.com.scriptmanagercaproni.components.FileChooserFile;
 import br.com.scriptmanagercaproni.control.DatabaseCatalogControl;
+import br.com.scriptmanagercaproni.model.DatabaseModel;
 
 public class DatabaseCatalogView extends JFrame {
 
@@ -32,6 +37,10 @@ public class DatabaseCatalogView extends JFrame {
 	private JTextField txtNameCatalog;
 	private JLabel lblNomeCatalogo;
 	private JTable table;
+	private String[] columnNames = { "ALIAS", "JDBC" };
+	private Object[][] data = {};
+	DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	
 
 	/**
 	 * Launch the application.
@@ -56,7 +65,7 @@ public class DatabaseCatalogView extends JFrame {
 	public DatabaseCatalogView() {
 		databaseCatalogControl = new DatabaseCatalogControl();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 581, 383);
+		setBounds(100, 100, 822, 523);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,7 +76,7 @@ public class DatabaseCatalogView extends JFrame {
 		contentPane.add(lbCaproniFolder);
 
 		txCaproniPath = new JTextField();
-		txCaproniPath.setBounds(117, 62, 342, 19);
+		txCaproniPath.setBounds(147, 62, 550, 19);
 		contentPane.add(txCaproniPath);
 		txCaproniPath.setColumns(10);
 		txCaproniPath.setEditable(false);
@@ -77,9 +86,20 @@ public class DatabaseCatalogView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooserFile();
 				txCaproniPath.setText(chooser.getSelectedFile().getPath());
+				DefaultTableModel model = (DefaultTableModel) table.getModel();
+				List<DatabaseModel> databaseModels = null;
+				try {
+					databaseModels = databaseCatalogControl.listaDatabaseModel(new File(txCaproniPath.getText()));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				for (DatabaseModel databaseModel : databaseModels) {
+					model.addRow(new Object[] { databaseModel.getDatabaseAlias(), databaseModel.getDatabaseJDBC() });
+				}
+
 			}
 		});
-		button.setBounds(469, 60, 43, 25);
+		button.setBounds(720, 60, 43, 25);
 		contentPane.add(button);
 
 		btFechar = new JButton("Fechar");
@@ -88,7 +108,7 @@ public class DatabaseCatalogView extends JFrame {
 				dispose();
 			}
 		});
-		btFechar.setBounds(134, 294, 98, 25);
+		btFechar.setBounds(134, 436, 98, 25);
 		contentPane.add(btFechar);
 
 		btCatalog = new JButton("Catalogar");
@@ -97,11 +117,11 @@ public class DatabaseCatalogView extends JFrame {
 				databaseCatalogControl.catalogDatabase(new File(txCaproniPath.getText()), txtNameCatalog.getText());
 			}
 		});
-		btCatalog.setBounds(24, 294, 98, 25);
+		btCatalog.setBounds(24, 436, 98, 25);
 		contentPane.add(btCatalog);
 
 		txtNameCatalog = new JTextField();
-		txtNameCatalog.setBounds(115, 21, 397, 20);
+		txtNameCatalog.setBounds(147, 21, 616, 20);
 		contentPane.add(txtNameCatalog);
 		txtNameCatalog.setColumns(10);
 
@@ -109,15 +129,12 @@ public class DatabaseCatalogView extends JFrame {
 		lblNomeCatalogo.setBounds(24, 24, 81, 15);
 		contentPane.add(lblNomeCatalogo);
 
-		String[] columnNames = { "ALIAS", "JDBC" };
-		Object[][] data = {};
-
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 125, 545, 77);
+		scrollPane_1.setBounds(22, 125, 741, 240);
 		contentPane.add(scrollPane_1);
 
 		table = new JTable(data, columnNames);
-
+		table.setModel(model);
 		scrollPane_1.setViewportView(table);
 	}
 }

@@ -27,7 +27,7 @@ public class DatabaseModel {
 	}
 
 	public void setDatabaseAlias(String databaseAlias) {
-		this.databaseAlias = databaseAlias;
+		this.databaseAlias = databaseAlias.replace("[", "").replace("]", "");
 	}
 
 	@XmlElement(name = "databaseType")
@@ -87,11 +87,11 @@ public class DatabaseModel {
 	public String getDatabaseJDBC() {
 		switch (databaseType) {
 		case "ORACLE":
-			return "jdbc:oracle:thin:@" + databaseIP + ":" + databasePort + ":" + databaseSiglaSistema;
+			return "jdbc:oracle:thin:@" + databaseIP + ":" + databasePort + ":" + databaseAlias;
 		case "SQLSERVER":
-			return "jdbc:sqlserver://" + databaseIP + ":" + databasePort + ";databaseName=" + databaseSiglaSistema;
+			return "jdbc:sqlserver://" + databaseIP + ":" + databasePort + ";databaseName=" + databaseAlias;
 		case "DB2":
-			return "jdbc:db2://" + databaseIP + ":" + databasePort + "/" + databaseSiglaSistema;
+			return "jdbc:db2://" + databaseIP + ":" + databasePort + "/" + databaseAlias;
 		}
 		return null;
 

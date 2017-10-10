@@ -26,10 +26,10 @@ public class DatabaseCatalogControl {
 	}
 
 	private void saveFile(ListDatabaseModel listDatabaseModel, String nameFileDest) {
-		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_INI_EXT);
+		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_XML_EXT);
 	}
 
-	private List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
+	public List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
 		List<DatabaseModel> listDatabase = new ArrayList<DatabaseModel>();
 		DatabaseModel databaseModel;
 		FileReader reader = new FileReader(arquivoOrigem);
