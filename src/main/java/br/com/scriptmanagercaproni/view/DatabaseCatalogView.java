@@ -119,7 +119,5 @@ public class DatabaseCatalogView extends JFrame {
 		table = new JTable(data, columnNames);
 
 		scrollPane_1.setViewportView(table);
-		table.getColumn(1).setPreferredWidth(120);
-		table.getColumn(0).setPreferredWidth(27);
 	}
 }
