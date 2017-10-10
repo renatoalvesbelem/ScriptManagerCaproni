@@ -121,9 +121,10 @@ public class MainView extends JFrame {
 				DatabaseCatalogView databaseCatalogView = 	new DatabaseCatalogView();
 				databaseCatalogView.setModal(true);
 				databaseCatalogView.setVisible(true);
+				System.out.println("TEste");
 			}
 		});
-		btnAdicionarBase.setBounds(643, 328, 120, 25);
+		btnAdicionarBase.setBounds(641, 280, 120, 25);
 		contentPane.add(btnAdicionarBase);
 
 		JButton btnExecute = new JButton("Execute");
@@ -138,16 +139,20 @@ public class MainView extends JFrame {
 
 		JRadioButton rbPG = new JRadioButton(DataBaseType.PG);
 		buttonGroup.add(rbPG);
-		rbPG.setBounds(21, 373, 121, 23);
+		rbPG.setBounds(44, 371, 121, 23);
 		rbPG.setSelected(true);
 		rbPG.setActionCommand(DataBaseType.PG);
 		contentPane.add(rbPG);
 
 		JRadioButton rbSG = new JRadioButton(DataBaseType.SG);
 		buttonGroup.add(rbSG);
-		rbSG.setBounds(21, 394, 121, 23);
+		rbSG.setBounds(44, 392, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
 		contentPane.add(rbSG);
+		
+		JComboBox cbDatabaseCatalog = new JComboBox();
+		cbDatabaseCatalog.setBounds(44, 282, 577, 20);
+		contentPane.add(cbDatabaseCatalog);
 	}
 
 	public void createPanelCheckBox(String pahtScript) {

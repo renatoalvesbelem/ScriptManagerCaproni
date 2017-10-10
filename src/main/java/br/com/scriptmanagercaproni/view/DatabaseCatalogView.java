@@ -65,15 +65,15 @@ public class DatabaseCatalogView extends JDialog {
 		JLabel lblNewLabel = new JLabel("Nome Catalogo");
 		lblNewLabel.setBounds(10, 11, 101, 14);
 		contentPanel.add(lblNewLabel);
-		
+
 		txtNameCatalog = new JTextField();
 		txtNameCatalog.setBounds(121, 8, 535, 20);
 		contentPanel.add(txtNameCatalog);
 		txtNameCatalog.setColumns(10);
 		{
-			JLabel label = new JLabel("Nome Catalogo");
-			label.setBounds(10, 39, 101, 14);
-			contentPanel.add(label);
+			JLabel lblArquivoCatalogo = new JLabel("Arquivo Catalogo");
+			lblArquivoCatalogo.setBounds(10, 39, 101, 14);
+			contentPanel.add(lblArquivoCatalogo);
 		}
 		{
 			txCaproniPath = new JTextField();
@@ -96,16 +96,16 @@ public class DatabaseCatalogView extends JDialog {
 						e1.printStackTrace();
 					}
 					for (DatabaseModel databaseModel : databaseModels) {
-						model.addRow(new Object[] { databaseModel.getDatabaseAlias(), databaseModel.getDatabaseJDBC() });
+						model.addRow(
+								new Object[] { databaseModel.getDatabaseAlias(), databaseModel.getDatabaseJDBC() });
 					}
-					
-					
+
 				}
 			});
 			btnNewButton.setBounds(666, 35, 41, 23);
 			contentPanel.add(btnNewButton);
 		}
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 95, 646, 240);
 		contentPanel.add(scrollPane);
@@ -114,19 +114,16 @@ public class DatabaseCatalogView extends JDialog {
 		table.setEnabled(false);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
-		
-		JButton button = new JButton("+");
-		button.setBounds(666, 98, 41, 23);
-		contentPanel.add(button);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Catalogar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						databaseCatalogControl.catalogDatabase(new File(txCaproniPath.getText()), txtNameCatalog.getText());
+						databaseCatalogControl.catalogDatabase(new File(txCaproniPath.getText()),
+								txtNameCatalog.getText());
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -134,7 +131,12 @@ public class DatabaseCatalogView extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Fechar");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
