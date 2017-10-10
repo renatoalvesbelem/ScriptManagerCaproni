@@ -118,7 +118,9 @@ public class MainView extends JFrame {
 		JButton btnAdicionarBase = new JButton("Catalogar Base");
 		btnAdicionarBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DatabaseCatalogView().setVisible(true);
+				DatabaseCatalogView databaseCatalogView = 	new DatabaseCatalogView();
+				databaseCatalogView.setModal(true);
+				databaseCatalogView.setVisible(true);
 			}
 		});
 		btnAdicionarBase.setBounds(643, 328, 120, 25);
