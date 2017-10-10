@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -129,12 +128,13 @@ public class DatabaseCatalogView extends JFrame {
 		lblNomeCatalogo.setBounds(24, 24, 81, 15);
 		contentPane.add(lblNomeCatalogo);
 
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(22, 125, 741, 240);
-		contentPane.add(scrollPane_1);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(22, 125, 741, 240);
+		contentPane.add(scrollPane);
 
 		table = new JTable(data, columnNames);
+		table.setEnabled(false);
 		table.setModel(model);
-		scrollPane_1.setViewportView(table);
+		scrollPane.setViewportView(table);
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,7 +16,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -25,8 +29,6 @@ import br.com.scriptmanagercaproni.components.PanelCheckBox;
 import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
 import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 
 public class MainView extends JFrame {
 	private static final long serialVersionUID = 8862157956341479195L;
@@ -45,6 +47,12 @@ public class MainView extends JFrame {
 				try {
 					MainView frame = new MainView();
 					frame.setVisible(true);
+					try {
+						UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+						SwingUtilities.updateComponentTreeUI(frame);
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,6 +93,7 @@ public class MainView extends JFrame {
 				String pathScriptFolder = chooser.getSelectedFile().getPath();
 				txFilePath.setText(pathScriptFolder);
 				createPanelCheckBox(pathScriptFolder);
+
 			}
 		});
 		btnSelecione.setBounds(720, 39, 43, 25);
@@ -106,10 +115,10 @@ public class MainView extends JFrame {
 		cbDatabaseType.setBounds(44, 328, 577, 24);
 		contentPane.add(cbDatabaseType);
 
-		JButton btnAdicionarBase = new JButton("Adicionar Base");
+		JButton btnAdicionarBase = new JButton("Catalogar Base");
 		btnAdicionarBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DatabaseConfigurationView().setVisible(true);
+				new DatabaseCatalogView().setVisible(true);
 			}
 		});
 		btnAdicionarBase.setBounds(643, 328, 120, 25);
