@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -27,8 +30,10 @@ import javax.swing.border.TitledBorder;
 import br.com.scriptmanagercaproni.components.FileChooserDirectory;
 import br.com.scriptmanagercaproni.components.PanelCheckBox;
 import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
+import br.com.scriptmanagercaproni.control.DatabaseCatalogControl;
 import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
+import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class MainView extends JFrame {
 	private static final long serialVersionUID = 8862157956341479195L;
@@ -40,6 +45,7 @@ public class MainView extends JFrame {
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = true;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JComboBox<String> cbDatabaseCatalog = new JComboBox<String>();
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,13 +69,11 @@ public class MainView extends JFrame {
 	public MainView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
-
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mnConfiguracoes = new JMenu("Configurações");
 		menuBar.add(mnConfiguracoes);
-
 		JMenuItem mntmNewMenuItem = new JMenuItem("Caproni");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -118,10 +122,10 @@ public class MainView extends JFrame {
 		JButton btnAdicionarBase = new JButton("Catalogar Base");
 		btnAdicionarBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatabaseCatalogView databaseCatalogView = 	new DatabaseCatalogView();
+				DatabaseCatalogView databaseCatalogView = new DatabaseCatalogView();
 				databaseCatalogView.setModal(true);
 				databaseCatalogView.setVisible(true);
-				System.out.println("TEste");
+				updateCbDatabaseCatalog();
 			}
 		});
 		btnAdicionarBase.setBounds(641, 280, 120, 25);
@@ -149,9 +153,9 @@ public class MainView extends JFrame {
 		rbSG.setBounds(44, 392, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
 		contentPane.add(rbSG);
-		
-		JComboBox cbDatabaseCatalog = new JComboBox();
+
 		cbDatabaseCatalog.setBounds(44, 282, 577, 20);
+		updateCbDatabaseCatalog();
 		contentPane.add(cbDatabaseCatalog);
 	}
 
@@ -191,5 +195,23 @@ public class MainView extends JFrame {
 		panelCheckBox.setBounds(44, 71, 719, height);
 
 		contentPane.validate();
+
 	}
+
+	public void updateCbDatabaseCatalog() {
+		List<String> databaseCatalogControl = null;
+		cbDatabaseCatalog.removeAllItems();
+		try {
+			databaseCatalogControl = new DatabaseCatalogControl().getListCatalogFiles(new File("").getCanonicalFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		for (String databaseCatalog : databaseCatalogControl) {
+			if (databaseCatalog.contains(SystemParameter.CAPRONI_XML_EXT)) {
+				cbDatabaseCatalog.addItem(databaseCatalog.replace(SystemParameter.CAPRONI_XML_EXT, ""));
+			}
+		}
+
+	}
+
 }

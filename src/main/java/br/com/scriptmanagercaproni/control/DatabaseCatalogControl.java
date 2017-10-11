@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import br.com.objectfile.xml.ObjectToXML;
@@ -52,5 +53,13 @@ public class DatabaseCatalogControl {
 		}
 		leitor.close();
 		return listDatabase;
+	}
+
+	public List<String> getListCatalogFiles(File file) {
+		List<String> listCatalogFiles = new ArrayList<String>();
+		for (String fileName : file.list()) {
+			listCatalogFiles.add(fileName);
+		}
+		return listCatalogFiles;
 	}
 }
