@@ -71,11 +71,9 @@ public class ScriptFolderControl {
 			}
 			this.instancia = DataBaseType.FOLDER_DB2;
 		}
-
+		String folderCaproni = file.getAbsolutePath();
 		try {
-			String folderCaproni = file.getAbsolutePath();
 			remover(new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT));
-			// new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT).mkdir();
 			for (String folder : folders) {
 				String folderFinalTmp = folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT + folder;
 				new File(folderFinalTmp).mkdir();
@@ -88,6 +86,8 @@ public class ScriptFolderControl {
 		for (String aplication : aplicationsSelected) {
 			copyFiles(pathOrigin + "\\" + aplication + "\\DBCHANGE");
 		}
+		deleteFoldersEmpty(folders);
+		createDbChange();
 
 	}
 
@@ -106,9 +106,10 @@ public class ScriptFolderControl {
 
 		for (String folder : folders) {
 			if (new File(origemAplication + "\\" + instancia + "\\" + folder).listFiles() != null) {
-				copyFile(new File(origemAplication + "\\" + instancia + "\\" + folder).listFiles(),new File(file.getAbsolutePath() + "\\" + SystemParameter.CAPRONI_FOLDER_INPUT + folder));	
+				copyFile(new File(origemAplication + "\\" + instancia + "\\" + folder).listFiles(),
+						new File(file.getAbsolutePath() + "\\" + SystemParameter.CAPRONI_FOLDER_INPUT + folder));
 			}
-			
+
 		}
 
 	}
@@ -136,6 +137,22 @@ public class ScriptFolderControl {
 			in.close();
 		} catch (Exception e) {
 			System.out.print("Não foi encontrado nenhum arquivo para a pasta " + inFileName);
+		}
+	}
+
+	private void createDbChange() {
+		File directoryInput = new File(file.getAbsolutePath() + SystemParameter.CAPRONI_FOLDER_INPUT);
+		directoryInput.list();
+	}
+
+	private void deleteFoldersEmpty(String[] folders) {
+		String folderCaproni = file.getAbsolutePath();
+		for (String folder : folders) {
+			String folderFinalTmp = folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT + folder;
+			File file = new File(folderFinalTmp);
+			if (file.list().length == 0) {
+				file.delete();
+			}
 		}
 	}
 }
