@@ -134,8 +134,11 @@ public class MainView extends JFrame {
 		JButton btnExecute = new JButton("Execute");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ScriptFolderControl(new CaproniConfigurationControl().getPath()).createDirectoryDestination(
-						cbDatabaseType.getSelectedItem().toString(), buttonGroup.getSelection().getActionCommand());
+				ScriptFolderControl scriptFolderControl = new ScriptFolderControl(
+						new CaproniConfigurationControl().getPath());
+				scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
+						buttonGroup.getSelection().getActionCommand(),panelCheckBox.getListCheckBoxSelected(),txFilePath.getText());
+				
 			}
 		});
 		btnExecute.setBounds(44, 509, 98, 25);

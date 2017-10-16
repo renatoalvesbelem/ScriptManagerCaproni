@@ -4,11 +4,11 @@ package br.com.scriptmanagercaproni.parameter;
 import java.util.Arrays;
 
 public interface DataBaseFolders {
-	String[] FOLDER_ORACLEPG = { "NET", "PG5TINT", "INDTINT" };
-	String[] FOLDER_ORACLESG = { "NETTING", "SG5TINTG", "INDTING" };
+	String[] FOLDER_ORACLEPG = { "NET", "PG5", "IND" };
+	String[] FOLDER_ORACLESG = { "NETSG", "SG5", "INDSG" };
 
-	String[] FOLDER_SQLSERVERPG = { "NET", "PG5TINT", "INDTINT", "PG5TINT2", "PG5TINT3" };
-	String[] FOLDER_SQLSERVERSG = { "NETTING", "SG5TINTG", "INDTING" };
+	String[] FOLDER_SQLSERVERPG = { "NET", "PG5", "IND", "PG52", "PG53" };
+	String[] FOLDER_SQLSERVERSG = { "NETSG", "SG5", "INDSG" };
 
 	String[] FOLDER_DB2PG = Arrays.copyOf(FOLDER_SQLSERVERPG, FOLDER_SQLSERVERPG.length);
 
