@@ -1,14 +1,18 @@
 package br.com.scriptmanagercaproni.control;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import br.com.scriptmanagercaproni.parameter.DataBaseFolders;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
+import br.com.scriptmanagercaproni.parameter.DbChangeFile;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class ScriptFolderControl {
@@ -141,8 +145,13 @@ public class ScriptFolderControl {
 	}
 
 	private void createDbChange() {
-		File directoryInput = new File(file.getAbsolutePath() + SystemParameter.CAPRONI_FOLDER_INPUT);
-		directoryInput.list();
+
+		String pathInput = file.getAbsolutePath() + SystemParameter.CAPRONI_FOLDER_INPUT;
+		for (String folder : new File(pathInput).list()) {
+			String fileDbChange = pathInput + folder;
+			writeDbChange(new File(fileDbChange));
+
+		}
 	}
 
 	private void deleteFoldersEmpty(String[] folders) {
@@ -153,6 +162,30 @@ public class ScriptFolderControl {
 			if (file.list().length == 0) {
 				file.delete();
 			}
+		}
+	}
+
+	private void writeDbChange(File fileDbChange) {
+		FileWriter fileW;
+		try {
+			fileW = new FileWriter(fileDbChange.getAbsolutePath() + "\\" + "dbChange.xml");
+			BufferedWriter buffW = new BufferedWriter(fileW);
+			buffW.write(DbChangeFile.HEADER_XML);
+			buffW.newLine();
+			buffW.write(DbChangeFile.BEGIN_TAG_HAVILLAN);
+			buffW.newLine();
+			for (String file : fileDbChange.list()) {
+				buffW.write(DbChangeFile.BEGIN_TAG_SCRIPT + file + DbChangeFile.END_TAG_SCRIPT);
+				buffW.newLine();
+			}
+			buffW.write(DbChangeFile.END_TAG_HAVILLAN);
+			buffW.close();
+			fileW.close();
+			
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
