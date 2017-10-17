@@ -61,4 +61,8 @@ public class DatabaseCatalogControl {
 		}
 		return listCatalogFiles;
 	}
+
+	public boolean deleteDatabaseFile(String nameFile) {
+		return new File(nameFile + SystemParameter.CAPRONI_XML_EXT).delete();
+	}
 }

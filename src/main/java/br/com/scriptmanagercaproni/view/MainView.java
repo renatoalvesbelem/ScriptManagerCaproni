@@ -119,7 +119,7 @@ public class MainView extends JFrame {
 		cbDatabaseType.setBounds(44, 328, 577, 24);
 		contentPane.add(cbDatabaseType);
 
-		JButton btnAdicionarBase = new JButton("Catalogar Base");
+		JButton btnAdicionarBase = new JButton("Add");
 		btnAdicionarBase.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DatabaseCatalogView databaseCatalogView = new DatabaseCatalogView();
@@ -128,17 +128,18 @@ public class MainView extends JFrame {
 				updateCbDatabaseCatalog();
 			}
 		});
-		btnAdicionarBase.setBounds(641, 280, 120, 25);
+		btnAdicionarBase.setBounds(631, 282, 51, 25);
 		contentPane.add(btnAdicionarBase);
 
-		JButton btnExecute = new JButton("Execute");
+		JButton btnExecute = new JButton("Executar");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ScriptFolderControl scriptFolderControl = new ScriptFolderControl(
 						new CaproniConfigurationControl().getPath());
 				scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
-						buttonGroup.getSelection().getActionCommand(),panelCheckBox.getListCheckBoxSelected(),txFilePath.getText());
-				
+						buttonGroup.getSelection().getActionCommand(), panelCheckBox.getListCheckBoxSelected(),
+						txFilePath.getText());
+
 			}
 		});
 		btnExecute.setBounds(44, 509, 98, 25);
@@ -160,6 +161,18 @@ public class MainView extends JFrame {
 		cbDatabaseCatalog.setBounds(44, 282, 577, 20);
 		updateCbDatabaseCatalog();
 		contentPane.add(cbDatabaseCatalog);
+
+		JButton btnEdit = new JButton("Del");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (new DatabaseCatalogControl().deleteDatabaseFile(cbDatabaseCatalog.getSelectedItem().toString())) {
+					updateCbDatabaseCatalog();
+				}
+
+			}
+		});
+		btnEdit.setBounds(684, 282, 51, 25);
+		contentPane.add(btnEdit);
 	}
 
 	public void createPanelCheckBox(String pahtScript) {
@@ -216,5 +229,4 @@ public class MainView extends JFrame {
 		}
 
 	}
-
 }
