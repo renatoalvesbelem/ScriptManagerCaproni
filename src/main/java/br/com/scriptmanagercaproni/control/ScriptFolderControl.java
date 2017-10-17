@@ -140,7 +140,7 @@ public class ScriptFolderControl {
 			out.close();
 			in.close();
 		} catch (Exception e) {
-			System.out.print("Não foi encontrado nenhum arquivo para a pasta " + inFileName);
+			System.out.println("Não foi encontrado nenhum arquivo para a pasta " + inFileName);
 		}
 	}
 
@@ -175,16 +175,16 @@ public class ScriptFolderControl {
 			buffW.write(DbChangeFile.BEGIN_TAG_HAVILLAN);
 			buffW.newLine();
 			for (String file : fileDbChange.list()) {
-				buffW.write(DbChangeFile.BEGIN_TAG_SCRIPT + file + DbChangeFile.END_TAG_SCRIPT);
-				buffW.newLine();
+				if (file.contains(".DH4")) {
+					buffW.write(DbChangeFile.BEGIN_TAG_SCRIPT + file + DbChangeFile.END_TAG_SCRIPT);
+					buffW.newLine();
+				}
 			}
 			buffW.write(DbChangeFile.END_TAG_HAVILLAN);
 			buffW.close();
 			fileW.close();
-			
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
