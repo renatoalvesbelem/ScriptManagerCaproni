@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.objectfile.xml.ObjectToXML;
+import br.com.objectfile.xml.XMLToObject;
 import br.com.scriptmanagercaproni.model.DatabaseModel;
 import br.com.scriptmanagercaproni.model.ListDatabaseModel;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
@@ -64,5 +65,28 @@ public class DatabaseCatalogControl {
 
 	public boolean deleteDatabaseFile(String nameFile) {
 		return new File(nameFile + SystemParameter.CAPRONI_XML_EXT).delete();
+	}
+
+	public List<String> returnDateCatalog(String nameFile) {
+		ListDatabaseModel listDatabaseModel = (ListDatabaseModel) new XMLToObject(new ListDatabaseModel(),
+				nameFile + SystemParameter.CAPRONI_XML_EXT).instanceObjectParsed();
+		List<String> dadoRetornado = new ArrayList<String>();
+
+		dadoRetornado.add(listDatabaseModel.getDatabaseModel().get(0).getDatabaseType());
+		switch (listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema()) {
+		case "SG5":
+			dadoRetornado.add("SG");
+			break;
+		case "NETG":
+			dadoRetornado.add("SG");
+			break;
+		case "PG5":
+			dadoRetornado.add("PG");
+			break;
+		case "NET":
+			dadoRetornado.add("PG");
+			break;
+		}
+		return dadoRetornado;
 	}
 }

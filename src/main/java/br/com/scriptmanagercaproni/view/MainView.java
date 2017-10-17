@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -46,6 +50,9 @@ public class MainView extends JFrame {
 	final static boolean RIGHT_TO_LEFT = true;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JComboBox<String> cbDatabaseCatalog = new JComboBox<String>();
+	final JComboBox<String> cbDatabaseType;
+	JRadioButton rbPG;
+	JRadioButton rbSG;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -114,8 +121,8 @@ public class MainView extends JFrame {
 		panelCheckBox.setBounds(44, 71, 719, 43);
 		contentPane.add(panelCheckBox);
 
-		final JComboBox<String> cbDatabaseType = new JComboBox<String>();
-		cbDatabaseType.setModel(new DefaultComboBoxModel<String>(DataBaseType.ALL_TYPES));
+		cbDatabaseType = new JComboBox<String>();
+		cbDatabaseType.setModel(new DefaultComboBoxModel<String>(new String[] { "ORACLE", "SQLSERVER", "DB2" }));
 		cbDatabaseType.setBounds(44, 328, 577, 24);
 		contentPane.add(cbDatabaseType);
 
@@ -145,18 +152,34 @@ public class MainView extends JFrame {
 		btnExecute.setBounds(44, 509, 98, 25);
 		contentPane.add(btnExecute);
 
-		JRadioButton rbPG = new JRadioButton(DataBaseType.PG);
+		rbPG = new JRadioButton(DataBaseType.PG);
 		buttonGroup.add(rbPG);
 		rbPG.setBounds(44, 371, 121, 23);
 		rbPG.setSelected(true);
 		rbPG.setActionCommand(DataBaseType.PG);
 		contentPane.add(rbPG);
 
-		JRadioButton rbSG = new JRadioButton(DataBaseType.SG);
+		rbSG = new JRadioButton(DataBaseType.SG);
 		buttonGroup.add(rbSG);
 		rbSG.setBounds(44, 392, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
 		contentPane.add(rbSG);
+		cbDatabaseCatalog.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				updateFiltros();
+			}
+		});
+		cbDatabaseCatalog.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+
+			}
+		});
+		cbDatabaseCatalog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 
 		cbDatabaseCatalog.setBounds(44, 282, 577, 20);
 		updateCbDatabaseCatalog();
@@ -227,6 +250,23 @@ public class MainView extends JFrame {
 				cbDatabaseCatalog.addItem(databaseCatalog.replace(SystemParameter.CAPRONI_XML_EXT, ""));
 			}
 		}
+	}
 
+	public void updateFiltros() {
+		try {
+			List<String> infos = new DatabaseCatalogControl()
+					.returnDateCatalog(cbDatabaseCatalog.getSelectedItem().toString());
+			cbDatabaseType.setSelectedItem(infos.get(0));
+			switch (infos.get(1)) {
+			case "PG":
+				rbPG.setSelected(true);
+				break;
+			case "SG":
+				rbSG.setSelected(true);
+				break;
+			}
+		} catch (Exception e) {
+
+		}
 	}
 }
