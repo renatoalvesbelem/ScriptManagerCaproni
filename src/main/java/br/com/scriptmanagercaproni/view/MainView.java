@@ -100,8 +100,7 @@ public class MainView extends JFrame {
 		JButton btnSelecione = new JButton("...");
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new FileChooserDirectory();
-				chooser.setCurrentDirectory(new File(txFilePath.getText()));
+				JFileChooser chooser = new FileChooserDirectory(txFilePath.getText());
 				String pathScriptFolder = chooser.getSelectedFile().getPath();
 				txFilePath.setText(pathScriptFolder);
 				createPanelCheckBox(pathScriptFolder);
