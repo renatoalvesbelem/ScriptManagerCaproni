@@ -48,51 +48,52 @@ public class ScriptFolderControl {
 
 	}
 
-	@SuppressWarnings("null")
-	public void createDirectoryDestination(String databaseType, String instancia, List<String> aplicationsSelected,
+	public boolean createDirectoryDestination(String databaseType, String instancia, List<String> aplicationsSelected,
 			String pathOrigin) {
 
-		List<String> foldersDatabase = new ArrayList<String>();
-		if (databaseType.equals(DataBaseType.ORACLE)) {
-			if (instancia.equals(DataBaseType.PG)) {
-				folders = DataBaseFolders.FOLDER_ORACLEPG;
-			} else {
-				folders = DataBaseFolders.FOLDER_ORACLESG;
-			}
-			this.instancia = DataBaseType.FOLDER_ORACLE;
-		} else if (databaseType.equals(DataBaseType.SQLSERVER)) {
-			if (instancia.equals(DataBaseType.PG)) {
-				folders = DataBaseFolders.FOLDER_SQLSERVERPG;
-			} else {
-				folders = DataBaseFolders.FOLDER_SQLSERVERSG;
-			}
-			this.instancia = DataBaseType.FOLDER_SQLSERVER;
-		} else {
-			if (instancia.equals(DataBaseType.PG)) {
-				folders = DataBaseFolders.FOLDER_DB2PG;
-			} else {
-				folders = DataBaseFolders.FOLDER_DB2SG;
-			}
-			this.instancia = DataBaseType.FOLDER_DB2;
-		}
-		String folderCaproni = file.getAbsolutePath();
 		try {
+			List<String> foldersDatabase = new ArrayList<String>();
+			if (databaseType.equals(DataBaseType.ORACLE)) {
+				if (instancia.equals(DataBaseType.PG)) {
+					folders = DataBaseFolders.FOLDER_ORACLEPG;
+				} else {
+					folders = DataBaseFolders.FOLDER_ORACLESG;
+				}
+				this.instancia = DataBaseType.FOLDER_ORACLE;
+			} else if (databaseType.equals(DataBaseType.SQLSERVER)) {
+				if (instancia.equals(DataBaseType.PG)) {
+					folders = DataBaseFolders.FOLDER_SQLSERVERPG;
+				} else {
+					folders = DataBaseFolders.FOLDER_SQLSERVERSG;
+				}
+				this.instancia = DataBaseType.FOLDER_SQLSERVER;
+			} else {
+				if (instancia.equals(DataBaseType.PG)) {
+					folders = DataBaseFolders.FOLDER_DB2PG;
+				} else {
+					folders = DataBaseFolders.FOLDER_DB2SG;
+				}
+				this.instancia = DataBaseType.FOLDER_DB2;
+			}
+			String folderCaproni = file.getAbsolutePath();
 			remover(new File(folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT));
 			for (String folder : folders) {
 				String folderFinalTmp = folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT + folder;
 				new File(folderFinalTmp).mkdir();
 				foldersDatabase.add(folderFinalTmp);
+				for (String aplication : aplicationsSelected) {
+					copyFiles(pathOrigin + "\\" + aplication + "\\DBCHANGE");
+				}
+				deleteFoldersEmpty(folders);
+				createDbChange();
+				return true;
 			}
 
 		} catch (Exception e) {
 
+			return false;
 		}
-		for (String aplication : aplicationsSelected) {
-			copyFiles(pathOrigin + "\\" + aplication + "\\DBCHANGE");
-		}
-		deleteFoldersEmpty(folders);
-		createDbChange();
-
+		return false;
 	}
 
 	private void remover(File files) {

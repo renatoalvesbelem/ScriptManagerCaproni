@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -145,9 +146,13 @@ public class MainView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ScriptFolderControl scriptFolderControl = new ScriptFolderControl(
 						new CaproniConfigurationControl().getPath());
-				scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
+				if (scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
 						buttonGroup.getSelection().getActionCommand(), panelCheckBox.getListCheckBoxSelected(),
-						txFilePath.getText());
+						txFilePath.getText())) {
+					JOptionPane.showMessageDialog(null, "Os scripts foram executados com sucesso");
+				} else {
+					JOptionPane.showMessageDialog(null, "Houve algum erro ao executar os scripts");
+				}
 
 			}
 		});
