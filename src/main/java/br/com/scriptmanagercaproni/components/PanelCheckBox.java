@@ -52,4 +52,12 @@ public class PanelCheckBox extends JPanel {
 		}
 		return listaCheckBox;
 	}
+	
+	public void selectAllCheckBox(boolean valor) {
+		for (Component checkbox : this.getComponents()) {
+			if (checkbox instanceof JCheckBox) {
+				 ((JCheckBox) checkbox).setSelected(valor);
+			}
+		}
+	}
 }

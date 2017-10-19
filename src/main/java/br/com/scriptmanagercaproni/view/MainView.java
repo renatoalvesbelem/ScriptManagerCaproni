@@ -39,13 +39,14 @@ import br.com.scriptmanagercaproni.control.DatabaseCatalogControl;
 import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
+import javax.swing.JCheckBox;
 
 public class MainView extends JFrame {
 	private static final long serialVersionUID = 8862157956341479195L;
 	private JPanel contentPane;
 	private JTextField txFilePath;
 	private PanelCheckBox panelCheckBox;
-	CaproniConfigurationControl caproniConfigurationControl;
+	CaproniConfigurationControl caproniConfigurationControl = new CaproniConfigurationControl();
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = true;
@@ -108,6 +109,7 @@ public class MainView extends JFrame {
 
 			}
 		});
+
 		btnSelecione.setBounds(720, 39, 43, 25);
 		contentPane.add(btnSelecione);
 
@@ -126,7 +128,7 @@ public class MainView extends JFrame {
 		cbDatabaseType = new JComboBox<String>();
 		cbDatabaseType.setEnabled(false);
 		cbDatabaseType.setModel(new DefaultComboBoxModel<String>(new String[] { "ORACLE", "SQLSERVER", "DB2" }));
-		cbDatabaseType.setBounds(44, 328, 577, 24);
+		cbDatabaseType.setBounds(44, 391, 577, 24);
 		contentPane.add(cbDatabaseType);
 
 		JButton btnAdicionarBase = new JButton("Add");
@@ -138,20 +140,24 @@ public class MainView extends JFrame {
 				updateCbDatabaseCatalog();
 			}
 		});
-		btnAdicionarBase.setBounds(631, 282, 51, 25);
+		btnAdicionarBase.setBounds(631, 345, 51, 25);
 		contentPane.add(btnAdicionarBase);
 
 		JButton btnExecute = new JButton("Executar");
 		btnExecute.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ScriptFolderControl scriptFolderControl = new ScriptFolderControl(
-						new CaproniConfigurationControl().getPath());
-				if (scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
-						buttonGroup.getSelection().getActionCommand(), panelCheckBox.getListCheckBoxSelected(),
-						txFilePath.getText())) {
-					JOptionPane.showMessageDialog(null, "Os scripts foram executados com sucesso");
+						caproniConfigurationControl.getPath());
+				if (panelCheckBox.getListCheckBoxSelected().size() != 0) {
+					if (scriptFolderControl.createDirectoryDestination(cbDatabaseType.getSelectedItem().toString(),
+							buttonGroup.getSelection().getActionCommand(), panelCheckBox.getListCheckBoxSelected(),
+							txFilePath.getText())) {
+						JOptionPane.showMessageDialog(null, "Os scripts foram executados com sucesso");
+					} else {
+						JOptionPane.showMessageDialog(null, "Houve algum erro ao executar os scripts");
+					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Houve algum erro ao executar os scripts");
+					JOptionPane.showMessageDialog(null, "Ao menos um sistema deverá ser selecionado");
 				}
 
 			}
@@ -162,7 +168,7 @@ public class MainView extends JFrame {
 		rbPG = new JRadioButton(DataBaseType.PG);
 		rbPG.setEnabled(false);
 		buttonGroup.add(rbPG);
-		rbPG.setBounds(44, 371, 121, 23);
+		rbPG.setBounds(44, 434, 121, 23);
 		rbPG.setSelected(true);
 		rbPG.setActionCommand(DataBaseType.PG);
 		contentPane.add(rbPG);
@@ -170,7 +176,7 @@ public class MainView extends JFrame {
 		rbSG = new JRadioButton(DataBaseType.SG);
 		rbSG.setEnabled(false);
 		buttonGroup.add(rbSG);
-		rbSG.setBounds(44, 392, 121, 23);
+		rbSG.setBounds(44, 455, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
 		contentPane.add(rbSG);
 		cbDatabaseCatalog.addItemListener(new ItemListener() {
@@ -190,7 +196,7 @@ public class MainView extends JFrame {
 			}
 		});
 
-		cbDatabaseCatalog.setBounds(44, 282, 577, 20);
+		cbDatabaseCatalog.setBounds(44, 345, 577, 20);
 		updateCbDatabaseCatalog();
 		contentPane.add(cbDatabaseCatalog);
 
@@ -203,8 +209,25 @@ public class MainView extends JFrame {
 
 			}
 		});
-		btnEdit.setBounds(684, 282, 51, 25);
+		btnEdit.setBounds(684, 345, 51, 25);
 		contentPane.add(btnEdit);
+
+		final JCheckBox chckbxTodos = new JCheckBox("Selecionar Todos");
+		chckbxTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				{
+					panelCheckBox.selectAllCheckBox(chckbxTodos.isSelected());
+
+				}
+			}
+		});
+		chckbxTodos.setBounds(44, 315, 97, 23);
+		contentPane.add(chckbxTodos);
+		String pathScript = caproniConfigurationControl.getPathScript();
+		if (!pathScript.equals("")) {
+			txFilePath.setText(pathScript);
+			createPanelCheckBox(pathScript);
+		}
 	}
 
 	public void createPanelCheckBox(String pahtScript) {

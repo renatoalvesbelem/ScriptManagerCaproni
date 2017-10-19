@@ -27,6 +27,24 @@ public class CaproniConfigurationControl {
 		}
 
 	}
+	
+	public String getPathScript() {
+		File file = new File(SystemParameter.CAPRONI_FILE_NAME);
+		if (file.exists()) {
+			CaproniFolderModel caproniFolderModel = (CaproniFolderModel) new XMLToObject(new CaproniFolderModel(),
+					file.getAbsolutePath()).instanceObjectParsed();
+			if (!caproniFolderModel.getPathFolder().isEmpty()) {
+				return caproniFolderModel.getPathScriptFolder();
+			} else {
+				return SystemParameter.FAVOR_INFORMAR_DIRETORIO;
+			}
+
+		} else {
+			return SystemParameter.FAVOR_INFORMAR_DIRETORIO;
+		}
+
+	}
+	
 
 	public boolean saveFile(String pathCapron, String pathScriptFolder) {
 		try {
