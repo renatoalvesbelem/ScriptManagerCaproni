@@ -27,15 +27,19 @@ public class CaproniConfigurationControl {
 		}
 
 	}
-	
-	public void saveFile(String pathCapron) {
-		if (!pathCapron.equals(SystemParameter.FAVOR_INFORMAR_DIRETORIO) ) {
-			CaproniFolderModel caproniFolderModel = new CaproniFolderModel();
-			caproniFolderModel.setPathFolder(pathCapron);
-			new ObjectToXML().createXML(caproniFolderModel, SystemParameter.CAPRONI_FILE_NAME);	
-		}
-		else {
-			JOptionPane.showMessageDialog(null, "Informe todos os campos obrigatórios");
+
+	public boolean saveFile(String pathCapron) {
+		try {
+			if (!pathCapron.equals(SystemParameter.FAVOR_INFORMAR_DIRETORIO)) {
+				CaproniFolderModel caproniFolderModel = new CaproniFolderModel();
+				caproniFolderModel.setPathFolder(pathCapron);
+				new ObjectToXML().createXML(caproniFolderModel, SystemParameter.CAPRONI_FILE_NAME);
+			} else {
+				JOptionPane.showMessageDialog(null, "Informe todos os campos obrigatórios");
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

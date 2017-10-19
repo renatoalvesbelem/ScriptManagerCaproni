@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -41,7 +42,7 @@ public class CaproniConfigurationView extends JFrame {
 	public CaproniConfigurationView() {
 		caproniConfigurationControl = new CaproniConfigurationControl();
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 467, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -79,7 +80,11 @@ public class CaproniConfigurationView extends JFrame {
 		btSalvar = new JButton("Salvar");
 		btSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				caproniConfigurationControl.saveFile(txCaproniPath.getText());
+				if (caproniConfigurationControl.saveFile(txCaproniPath.getText())) {
+					JOptionPane.showMessageDialog(null, "Configurações salvas com sucesso");
+				} else {
+					JOptionPane.showMessageDialog(null, "Houve algum erro ao salvar as configurações");
+				}
 			}
 		});
 		btSalvar.setBounds(24, 230, 98, 25);
