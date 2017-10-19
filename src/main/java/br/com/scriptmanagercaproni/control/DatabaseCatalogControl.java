@@ -23,7 +23,7 @@ public class DatabaseCatalogControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveFile(listDatabaseModel, nameFileDest.trim().replaceAll(" ", "_"));
+		saveFile(listDatabaseModel, nameFileDest);
 	}
 
 	private void saveFile(ListDatabaseModel listDatabaseModel, String nameFileDest) {

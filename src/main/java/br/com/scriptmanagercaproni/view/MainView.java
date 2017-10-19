@@ -101,6 +101,7 @@ public class MainView extends JFrame {
 		btnSelecione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new FileChooserDirectory();
+				chooser.setCurrentDirectory(new File(txFilePath.getText()));
 				String pathScriptFolder = chooser.getSelectedFile().getPath();
 				txFilePath.setText(pathScriptFolder);
 				createPanelCheckBox(pathScriptFolder);
@@ -111,6 +112,7 @@ public class MainView extends JFrame {
 		contentPane.add(btnSelecione);
 
 		txFilePath = new JTextField();
+		txFilePath.setEditable(false);
 		txFilePath.setBounds(134, 42, 563, 19);
 		contentPane.add(txFilePath);
 		txFilePath.setColumns(10);
@@ -122,6 +124,7 @@ public class MainView extends JFrame {
 		contentPane.add(panelCheckBox);
 
 		cbDatabaseType = new JComboBox<String>();
+		cbDatabaseType.setEnabled(false);
 		cbDatabaseType.setModel(new DefaultComboBoxModel<String>(new String[] { "ORACLE", "SQLSERVER", "DB2" }));
 		cbDatabaseType.setBounds(44, 328, 577, 24);
 		contentPane.add(cbDatabaseType);
@@ -153,6 +156,7 @@ public class MainView extends JFrame {
 		contentPane.add(btnExecute);
 
 		rbPG = new JRadioButton(DataBaseType.PG);
+		rbPG.setEnabled(false);
 		buttonGroup.add(rbPG);
 		rbPG.setBounds(44, 371, 121, 23);
 		rbPG.setSelected(true);
@@ -160,6 +164,7 @@ public class MainView extends JFrame {
 		contentPane.add(rbPG);
 
 		rbSG = new JRadioButton(DataBaseType.SG);
+		rbSG.setEnabled(false);
 		buttonGroup.add(rbSG);
 		rbSG.setBounds(44, 392, 121, 23);
 		rbSG.setActionCommand(DataBaseType.SG);
@@ -266,7 +271,7 @@ public class MainView extends JFrame {
 				break;
 			}
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 }
