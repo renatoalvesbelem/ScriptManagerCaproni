@@ -28,11 +28,12 @@ public class CaproniConfigurationControl {
 
 	}
 
-	public boolean saveFile(String pathCapron) {
+	public boolean saveFile(String pathCapron, String pathScriptFolder) {
 		try {
 			if (!pathCapron.equals(SystemParameter.FAVOR_INFORMAR_DIRETORIO)) {
 				CaproniFolderModel caproniFolderModel = new CaproniFolderModel();
 				caproniFolderModel.setPathFolder(pathCapron);
+				caproniFolderModel.setPathScriptFolder(pathScriptFolder);
 				new ObjectToXML().createXML(caproniFolderModel, SystemParameter.CAPRONI_FILE_NAME);
 			} else {
 				JOptionPane.showMessageDialog(null, "Informe todos os campos obrigatórios");
