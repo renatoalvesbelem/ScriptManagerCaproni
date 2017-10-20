@@ -221,7 +221,7 @@ public class MainView extends JFrame {
 				}
 			}
 		});
-		chckbxTodos.setBounds(44, 315, 97, 23);
+		chckbxTodos.setBounds(44, 315, 134, 23);
 		contentPane.add(chckbxTodos);
 		String pathScript = caproniConfigurationControl.getPathScript();
 		if (!pathScript.equals("")) {

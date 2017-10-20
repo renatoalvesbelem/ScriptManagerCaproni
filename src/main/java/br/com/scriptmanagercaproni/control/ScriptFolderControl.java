@@ -84,16 +84,17 @@ public class ScriptFolderControl {
 				for (String aplication : aplicationsSelected) {
 					copyFiles(pathOrigin + "\\" + aplication + "\\DBCHANGE");
 				}
-				deleteFoldersEmpty(folders);
-				createDbChange();
-				return true;
+				
+				
 			}
+			deleteFoldersEmpty(folders);
+			createDbChange();
+			return true;
 
 		} catch (Exception e) {
 
 			return false;
 		}
-		return false;
 	}
 
 	private void remover(File files) {
