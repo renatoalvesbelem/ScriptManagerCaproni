@@ -203,10 +203,13 @@ public class MainView extends JFrame {
 		JButton btnEdit = new JButton("Del");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (new DatabaseCatalogControl().deleteDatabaseFile(cbDatabaseCatalog.getSelectedItem().toString())) {
-					updateCbDatabaseCatalog();
+				if (JOptionPane.showConfirmDialog(null, "Deseja deletar o catalogo?", "WARNING",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					if (new DatabaseCatalogControl()
+							.deleteDatabaseFile(cbDatabaseCatalog.getSelectedItem().toString())) {
+						updateCbDatabaseCatalog();
+					}
 				}
-
 			}
 		});
 		btnEdit.setBounds(684, 345, 51, 25);
