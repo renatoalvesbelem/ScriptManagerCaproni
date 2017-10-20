@@ -10,4 +10,6 @@ public interface DataBaseType {
 	String[] ALL_TYPES = { "Selecione um tipo de banco", ORACLE, SQLSERVER, DB2 };
 	String PG = "PG";
 	String SG = "SG";
+	String PG5 = "PG5";
+	String SG5 = "SG5";
 }

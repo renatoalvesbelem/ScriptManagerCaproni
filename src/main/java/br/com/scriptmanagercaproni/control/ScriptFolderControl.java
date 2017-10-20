@@ -84,11 +84,17 @@ public class ScriptFolderControl {
 				for (String aplication : aplicationsSelected) {
 					copyFiles(pathOrigin + "\\" + aplication + "\\DBCHANGE");
 				}
-				
-				
+
 			}
 			deleteFoldersEmpty(folders);
 			createDbChange();
+			if ((databaseType.equals(DataBaseType.SQLSERVER) || databaseType.equals(DataBaseType.DB2))
+					&& (instancia.equals(DataBaseType.PG))) {
+				String folderFinalTmp = folderCaproni + SystemParameter.CAPRONI_FOLDER_INPUT + DataBaseType.PG5;
+				doubleSciptFolder(folderFinalTmp, folderFinalTmp + "2");
+				doubleSciptFolder(folderCaproni, folderFinalTmp + "3");
+			}
+
 			return true;
 
 		} catch (Exception e) {
@@ -189,5 +195,15 @@ public class ScriptFolderControl {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void doubleSciptFolder(String origem, String destiny) {
+		File filesOrigem = new File(origem);
+		File fileDestiny = new File(destiny);
+		if (filesOrigem.list().length != 0) {
+			fileDestiny.mkdir();
+			copyFile(filesOrigem.listFiles(), fileDestiny);
+		}
+
 	}
 }
