@@ -55,9 +55,11 @@ public class DatabaseCatalogControl {
 				databaseModel.setDatabaseType(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabaseIP(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabasePort(Integer.valueOf(leitor.readLine().split("=")[1]));
-				// Linha referente a informação instância
-				leitor.readLine();
-				databaseModel.setDatabaseUser(leitor.readLine().split("=")[1]);
+				if ((tmp = leitor.readLine()).equals("Instancia=ISAJ01")) {
+					databaseModel.setDatabaseUser(leitor.readLine().split("=")[1]);
+				} else {
+					databaseModel.setDatabaseUser(tmp.split("=")[1]);
+				}
 				databaseModel.setDatabasePasswd(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabaseSiglaSistema(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabaseReplicado(leitor.readLine().split("=")[1]);
