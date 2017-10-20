@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import br.com.objectfile.xml.ObjectToXML;
 import br.com.objectfile.xml.XMLToObject;
 import br.com.scriptmanagercaproni.model.DatabaseModel;
@@ -20,14 +22,23 @@ public class DatabaseCatalogControl {
 
 		try {
 			listDatabaseModel.setDatabaseModel(listaDatabaseModel(arquivoOrigem));
+			if (new File(nameFileDest + SystemParameter.CAPRONI_XML_EXT).exists()) {
+				if (JOptionPane.showConfirmDialog(null, "O arquivo já existe, deseja sobrescrever o catalogo?",
+						"WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					saveFile(listDatabaseModel, nameFileDest);
+				}
+			} else {
+				saveFile(listDatabaseModel, nameFileDest);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveFile(listDatabaseModel, nameFileDest);
+
 	}
 
 	private void saveFile(ListDatabaseModel listDatabaseModel, String nameFileDest) {
 		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_XML_EXT);
+		JOptionPane.showMessageDialog(null, "Dados catalogado com sucesso");
 	}
 
 	public List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
@@ -44,7 +55,7 @@ public class DatabaseCatalogControl {
 				databaseModel.setDatabaseType(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabaseIP(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabasePort(Integer.valueOf(leitor.readLine().split("=")[1]));
-				//Linha referente a informação instância
+				// Linha referente a informação instância
 				leitor.readLine();
 				databaseModel.setDatabaseUser(leitor.readLine().split("=")[1]);
 				databaseModel.setDatabasePasswd(leitor.readLine().split("=")[1]);

@@ -16,6 +16,7 @@ import br.com.scriptmanagercaproni.control.DatabaseCatalogControl;
 import br.com.scriptmanagercaproni.model.DatabaseModel;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
@@ -122,9 +123,14 @@ public class DatabaseCatalogView extends JDialog {
 				JButton okButton = new JButton("Catalogar");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						databaseCatalogControl.catalogDatabase(new File(txCaproniPath.getText()),
-								txtNameCatalog.getText());
+						if (!txtNameCatalog.getText().equals("") && table.getRowCount() != 0) {
+							databaseCatalogControl.catalogDatabase(new File(txCaproniPath.getText()),
+									txtNameCatalog.getText());
+						} else {
+							JOptionPane.showMessageDialog(null, "Informar dados obrigatórios");
+						}
 					}
+
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
@@ -141,5 +147,9 @@ public class DatabaseCatalogView extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+	
+	public void validateDoubleFile() {
+		
 	}
 }
