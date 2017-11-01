@@ -90,6 +90,16 @@ public class MainView extends JFrame {
 			}
 		});
 		mnConfiguracoes.add(mntmNewMenuItem);
+
+		JMenuItem mntmGerarSql = new JMenuItem("Gerar SQL");
+		mntmGerarSql.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SQLToolView sqlToolView = new SQLToolView();
+				// sqlToolView.setModal(true);
+				sqlToolView.setVisible(true);
+			}
+		});
+		mnConfiguracoes.add(mntmGerarSql);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

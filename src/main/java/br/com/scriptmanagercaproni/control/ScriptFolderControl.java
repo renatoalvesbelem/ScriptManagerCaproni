@@ -204,6 +204,16 @@ public class ScriptFolderControl {
 			fileDestiny.mkdir();
 			copyFile(filesOrigem.listFiles(), fileDestiny);
 		}
+	}
 
+	public ArrayList<String> listaScripts() {
+		ArrayList<String> listaScripts = new ArrayList<>();
+		String nomeScriptDH4;
+		for (File scriptDH4 : file.listFiles()) {
+			if (!(nomeScriptDH4 = scriptDH4.getName()).contains(".xml") || nomeScriptDH4.contains(".log")) {
+				listaScripts.add(nomeScriptDH4);
+			}
+		}
+		return listaScripts;
 	}
 }
