@@ -25,20 +25,24 @@ public class PanelCheckBox extends JPanel {
 		c.anchor = GridBagConstraints.NORTHWEST;
 		int x = 0;
 		int y = 0;
-		for (String element : scriptFolderControl.getSystemDirectoriesAndName().values()) {
+		try {
+			for (String element : scriptFolderControl.getSystemDirectoriesAndName().values()) {
 
-			JCheckBox box = new JCheckBox(element);
-			checkboxes.add(box);
-			c.weightx = 0.5;
-			c.gridx = x;
-			c.gridy = y;
-			this.add(box, c);
-			if (y >= 6) {
-				x++;
-				y = -1;
+				JCheckBox box = new JCheckBox(element);
+				checkboxes.add(box);
+				c.weightx = 0.5;
+				c.gridx = x;
+				c.gridy = y;
+				this.add(box, c);
+				if (y >= 6) {
+					x++;
+					y = -1;
+				}
+				y++;
+
 			}
-			y++;
-
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -51,5 +55,13 @@ public class PanelCheckBox extends JPanel {
 			}
 		}
 		return listaCheckBox;
+	}
+
+	public void selectAllCheckBox(boolean valor) {
+		for (Component checkbox : this.getComponents()) {
+			if (checkbox instanceof JCheckBox) {
+				((JCheckBox) checkbox).setSelected(valor);
+			}
+		}
 	}
 }
