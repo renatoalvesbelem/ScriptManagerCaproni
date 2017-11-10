@@ -24,7 +24,7 @@ import br.com.scriptmanagercaproni.parameter.DataBaseType;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 
-@SuppressWarnings("Since15")
+@SuppressWarnings("ALL")
 public class MainView extends JFrame {
     private static final long serialVersionUID = 8862157956341479195L;
     private JPanel contentPane;
