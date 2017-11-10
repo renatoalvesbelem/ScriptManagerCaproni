@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
@@ -299,8 +300,8 @@ public class MainView extends JFrame {
 
 	public void updateFiltros() {
 		try {
-			List<String> infos = new DatabaseCatalogControl()
-					.returnDateCatalog(cbDatabaseCatalog.getSelectedItem().toString());
+			List<String> infos = new ArrayList<>();
+			infos = new DatabaseCatalogControl().returnDateCatalog(cbDatabaseCatalog.getSelectedItem().toString());
 			cbDatabaseType.setSelectedItem(infos.get(0));
 			switch (infos.get(1)) {
 			case "PG":
@@ -310,8 +311,12 @@ public class MainView extends JFrame {
 				rbSG.setSelected(true);
 				break;
 			}
+
+		} catch (NullPointerException e) {
+			rbPG.setSelected(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }
