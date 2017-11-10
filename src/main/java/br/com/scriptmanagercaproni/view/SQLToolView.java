@@ -1,21 +1,15 @@
 package br.com.scriptmanagercaproni.view;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
 import br.com.scriptmanagercaproni.components.FileChooserDirectory;
 import br.com.scriptmanagercaproni.control.CaproniConfigurationControl;
 import br.com.scriptmanagercaproni.control.ScriptFolderControl;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 public class SQLToolView extends JFrame {
 
@@ -76,7 +70,7 @@ public class SQLToolView extends JFrame {
         JButton btGerar = new JButton("Gerar");
         btGerar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ArrayList<String> listaScripts = new ScriptFolderControl(txCaproniPath.getText()).listaScripts();
+                List<String> listaScripts = new ScriptFolderControl(txCaproniPath.getText()).listaScripts();
                 StringBuilder sql = new StringBuilder("select * from epadscriptrodado where nmscript in (");
                 for (String script : listaScripts) {
                     sql.append("'").append(script).append("',");

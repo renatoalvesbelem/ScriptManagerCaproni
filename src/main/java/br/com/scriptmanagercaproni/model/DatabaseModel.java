@@ -2,99 +2,98 @@ package br.com.scriptmanagercaproni.model;
 
 import javax.xml.bind.annotation.XmlElement;
 
+@SuppressWarnings("ALL")
 public class DatabaseModel {
-	private String databaseAlias;
-	private String databaseType;
-	private String databaseIP;
-	private int databasePort;
-	private String databaseUser;
-	private String databasePasswd;
-	private String databaseSiglaSistema;
-	private String databaseReplicado;
+    private String databaseAlias;
+    private String databaseType;
+    private String databaseIP;
+    private int databasePort;
+    private String databaseUser;
+    private String databasePasswd;
+    private String databaseSiglaSistema;
+    private String databaseReplicado;
 
-	@XmlElement(name = "databasePort")
-	public int getDatabasePort() {
-		return databasePort;
-	}
+    @XmlElement(name = "databasePort")
+    public int getDatabasePort() {
+        return databasePort;
+    }
 
-	public void setDatabasePort(int databasePort) {
-		this.databasePort = databasePort;
-	}
+    public void setDatabasePort(int databasePort) {
+        this.databasePort = databasePort;
+    }
 
-	@XmlElement(name = "databaseAlias")
-	public String getDatabaseAlias() {
-		return databaseAlias;
-	}
+    @XmlElement(name = "databaseAlias")
+    public String getDatabaseAlias() {
+        return databaseAlias;
+    }
 
-	public void setDatabaseAlias(String databaseAlias) {
-		this.databaseAlias = databaseAlias.replace("[", "").replace("]", "");
-	}
+    public void setDatabaseAlias(String databaseAlias) {
+        this.databaseAlias = databaseAlias.replace("[", "").replace("]", "");
+    }
 
-	@XmlElement(name = "databaseType")
-	public String getDatabaseType() {
-		return databaseType;
-	}
+    @XmlElement(name = "databaseType")
+    public String getDatabaseType() {
+        return databaseType;
+    }
 
-	public void setDatabaseType(String databaseType) {
-		this.databaseType = databaseType;
-	}
+    public void setDatabaseType(String databaseType) {
+        this.databaseType = databaseType;
+    }
 
-	@XmlElement(name = "databaseIP")
-	public String getDatabaseIP() {
-		return databaseIP;
-	}
+    @XmlElement(name = "databaseIP")
+    public String getDatabaseIP() {
+        return databaseIP;
+    }
 
-	public void setDatabaseIP(String databaseIP) {
-		this.databaseIP = databaseIP;
-	}
+    public void setDatabaseIP(String databaseIP) {
+        this.databaseIP = databaseIP;
+    }
 
-	@XmlElement(name = "databaseUser")
-	public String getDatabaseUser() {
-		return databaseUser;
-	}
+    @XmlElement(name = "databaseUser")
+    public String getDatabaseUser() {
+        return databaseUser;
+    }
 
-	public void setDatabaseUser(String databaseUser) {
-		this.databaseUser = databaseUser;
-	}
+    public void setDatabaseUser(String databaseUser) {
+        this.databaseUser = databaseUser;
+    }
 
-	@XmlElement(name = "databasePasswd")
-	public String getDatabasePasswd() {
-		return databasePasswd;
-	}
+    @XmlElement(name = "databasePasswd")
+    public String getDatabasePasswd() {
+        return databasePasswd;
+    }
 
-	public void setDatabasePasswd(String databasePasswd) {
-		this.databasePasswd = databasePasswd;
-	}
+    public void setDatabasePasswd(String databasePasswd) {
+        this.databasePasswd = databasePasswd;
+    }
 
-	@XmlElement(name = "databaseSiglaSistema")
-	public String getDatabaseSiglaSistema() {
-		return databaseSiglaSistema;
-	}
+    @XmlElement(name = "databaseSiglaSistema")
+    public String getDatabaseSiglaSistema() {
+        return databaseSiglaSistema;
+    }
 
-	public void setDatabaseSiglaSistema(String databaseSiglaSistema) {
-		this.databaseSiglaSistema = databaseSiglaSistema;
-	}
+    public void setDatabaseSiglaSistema(String databaseSiglaSistema) {
+        this.databaseSiglaSistema = databaseSiglaSistema;
+    }
 
-	@XmlElement(name = "databaseReplicado")
-	public String getDatabaseReplicado() {
-		return databaseReplicado;
-	}
+    @XmlElement(name = "databaseReplicado")
+    public String getDatabaseReplicado() {
+        return databaseReplicado;
+    }
 
-	public void setDatabaseReplicado(String databaseReplicado) {
-		this.databaseReplicado = databaseReplicado;
-	}
+    public void setDatabaseReplicado(String databaseReplicado) {
+        this.databaseReplicado = databaseReplicado;
+    }
 
-	public String getDatabaseJDBC() {
-		switch (databaseType) {
-		case "ORACLE":
-			return "jdbc:oracle:thin:@" + databaseIP + ":" + databasePort + ":" + databaseAlias;
-		case "SQLSERVER":
-			return "jdbc:sqlserver://" + databaseIP + ":" + databasePort + ";databaseName=" + databaseAlias;
-		case "DB2":
-			return "jdbc:db2://" + databaseIP + ":" + databasePort + "/" + databaseAlias;
-		}
-		return null;
-
-	}
+    public String getDatabaseJDBC() {
+        if (databaseType.equals("ORACLE")) {
+            return "jdbc:oracle:thin:@" + databaseIP + ":" + databasePort + ":" + databaseAlias;
+        } else if (databaseType.equals("SQLSERVER")) {
+            return "jdbc:sqlserver://" + databaseIP + ":" + databasePort + ";databaseName=" + databaseAlias;
+        } else if (databaseType.equals("DB2")) {
+            return "jdbc:db2://" + databaseIP + ":" + databasePort + "/" + databaseAlias;
+        }
+        return null;
+    }
 
 }

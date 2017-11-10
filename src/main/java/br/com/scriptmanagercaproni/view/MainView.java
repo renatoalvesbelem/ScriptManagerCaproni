@@ -8,25 +8,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -39,23 +23,19 @@ import br.com.scriptmanagercaproni.control.ScriptFolderControl;
 import br.com.scriptmanagercaproni.parameter.DataBaseType;
 import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
-import javax.swing.JCheckBox;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("Since15")
 public class MainView extends JFrame {
     private static final long serialVersionUID = 8862157956341479195L;
     private JPanel contentPane;
     private JTextField txFilePath;
     private PanelCheckBox panelCheckBox;
-    CaproniConfigurationControl caproniConfigurationControl = new CaproniConfigurationControl();
-    final static boolean shouldFill = true;
-    final static boolean shouldWeightX = true;
-    final static boolean RIGHT_TO_LEFT = true;
+    private CaproniConfigurationControl caproniConfigurationControl = new CaproniConfigurationControl();
     private final ButtonGroup buttonGroup = new ButtonGroup();
     private JComboBox<String> cbDatabaseCatalog;
     private JComboBox<String> cbDatabaseType;
-    JRadioButton rbPG;
-    JRadioButton rbSG;
+    private JRadioButton rbPG;
+    private JRadioButton rbSG;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -76,8 +56,8 @@ public class MainView extends JFrame {
         });
     }
 
-    public MainView() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private MainView() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
@@ -96,7 +76,6 @@ public class MainView extends JFrame {
         mntmGerarSql.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 SQLToolView sqlToolView = new SQLToolView();
-                // sqlToolView.setModal(true);
                 sqlToolView.setVisible(true);
             }
         });
@@ -117,7 +96,6 @@ public class MainView extends JFrame {
                 String pathScriptFolder = chooser.getSelectedFile().getPath();
                 txFilePath.setText(pathScriptFolder);
                 createPanelCheckBox(pathScriptFolder);
-
             }
         });
 
@@ -170,7 +148,6 @@ public class MainView extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Ao menos um sistema deverá ser selecionado");
                 }
-
             }
         });
         btnExecute.setBounds(44, 509, 98, 25);
@@ -221,7 +198,6 @@ public class MainView extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 {
                     panelCheckBox.selectAllCheckBox(chckbxTodos.isSelected());
-
                 }
             }
         });
@@ -234,18 +210,14 @@ public class MainView extends JFrame {
         }
     }
 
-    public void createPanelCheckBox(String pahtScript) {
-
-        if (panelCheckBox.getComponentCount() > 0)
-
-        {
+    private void createPanelCheckBox(String pahtScript) {
+        if (panelCheckBox.getComponentCount() > 0) {
             panelCheckBox.removeAll();
             panelCheckBox.repaint();
         }
         int height = 43;
         panelCheckBox.createCheckBox(pahtScript);
         switch (panelCheckBox.getComponentCount()) {
-
             case 0:
                 break;
             case 1:
@@ -268,37 +240,33 @@ public class MainView extends JFrame {
         }
 
         panelCheckBox.setBounds(44, 71, 719, height);
-
         contentPane.validate();
-
     }
 
-    public void updateCbDatabaseCatalog() {
+    private void updateCbDatabaseCatalog() {
         List<String> databaseCatalogControl = null;
         cbDatabaseCatalog.removeAllItems();
         try {
             databaseCatalogControl = new DatabaseCatalogControl().getListCatalogFiles(new File("").getCanonicalFile());
+            for (String databaseCatalog : databaseCatalogControl) {
+                if (databaseCatalog.contains(SystemParameter.CAPRONI_XML_EXT)) {
+                    cbDatabaseCatalog.addItem(databaseCatalog.replace(SystemParameter.CAPRONI_XML_EXT, ""));
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (String databaseCatalog : databaseCatalogControl) {
-            if (databaseCatalog.contains(SystemParameter.CAPRONI_XML_EXT)) {
-                cbDatabaseCatalog.addItem(databaseCatalog.replace(SystemParameter.CAPRONI_XML_EXT, ""));
-            }
-        }
+
     }
 
-    public void updateFiltros() {
+    private void updateFiltros() {
         try {
-            List<String> infos = new ArrayList<String>();
-            infos = new DatabaseCatalogControl().returnDateCatalog(cbDatabaseCatalog.getSelectedItem().toString());
+            List<String> infos = new DatabaseCatalogControl().returnDateCatalog(cbDatabaseCatalog.getSelectedItem().toString());
             cbDatabaseType.setSelectedItem(infos.get(0));
             if (infos.get(1).equals("PG")) {
                 rbPG.setSelected(true);
-
             } else if (infos.get(1).equals("SG")) {
                 rbSG.setSelected(true);
-
             }
 
         } catch (NullPointerException e) {
@@ -307,5 +275,4 @@ public class MainView extends JFrame {
             e.printStackTrace();
         }
     }
-
 }

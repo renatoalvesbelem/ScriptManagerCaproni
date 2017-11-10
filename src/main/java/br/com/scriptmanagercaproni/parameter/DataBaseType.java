@@ -1,5 +1,6 @@
 package br.com.scriptmanagercaproni.parameter;
 
+@SuppressWarnings("deprecation")
 public interface DataBaseType {
 	String ORACLE = "ORACLE";
 	String FOLDER_ORACLE = "ORACLE";

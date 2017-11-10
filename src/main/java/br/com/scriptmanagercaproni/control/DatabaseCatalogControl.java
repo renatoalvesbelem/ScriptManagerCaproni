@@ -88,19 +88,19 @@ public class DatabaseCatalogControl {
 		List<String> dadoRetornado = new ArrayList<String>();
 
 		dadoRetornado.add(listDatabaseModel.getDatabaseModel().get(0).getDatabaseType());
-		switch (listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema()) {
-		case "SG5":
+		String s = listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema();
+		if (s.equals("SG5")) {
 			dadoRetornado.add("SG");
-			break;
-		case "NETG":
+
+		} else if (s.equals("NETG")) {
 			dadoRetornado.add("SG");
-			break;
-		case "PG5":
+
+		} else if (s.equals("PG5")) {
 			dadoRetornado.add("PG");
-			break;
-		case "NET":
+
+		} else if (s.equals("NET")) {
 			dadoRetornado.add("PG");
-			break;
+
 		}
 		return dadoRetornado;
 	}
