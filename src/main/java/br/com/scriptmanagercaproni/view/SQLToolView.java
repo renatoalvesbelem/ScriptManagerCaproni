@@ -52,8 +52,7 @@ public class SQLToolView extends JFrame {
         JButton btChooseCaproniFolder = new JButton("...");
         btChooseCaproniFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new FileChooserDirectory(txCaproniPath.getText());
-                txCaproniPath.setText(chooser.getSelectedFile().getPath());
+                preencheCaminhoPath(txCaproniPath);
             }
         });
         btChooseCaproniFolder.setBounds(395, 9, 43, 25);
@@ -71,17 +70,25 @@ public class SQLToolView extends JFrame {
         JButton btGerar = new JButton("Gerar");
         btGerar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                List<String> listaScripts = new ScriptFolderControl(txCaproniPath.getText()).listaScripts();
-                StringBuilder sql = new StringBuilder("select * from epadscriptrodado where nmscript in (");
-                for (String script : listaScripts) {
-                    sql.append("'").append(script).append("',");
-                }
-                sql = new StringBuilder(sql.substring(0, sql.length() - 1));
-                sql.append(");");
-                System.out.println(sql);
+                geraSQL(new ScriptFolderControl(txCaproniPath.getText()).listaScripts());
             }
         });
         btGerar.setBounds(24, 230, 98, 25);
         contentPane.add(btGerar);
+    }
+
+    private void preencheCaminhoPath(JTextField txCaproniPath) {
+        JFileChooser chooser = new FileChooserDirectory(txCaproniPath.getText());
+        txCaproniPath.setText(chooser.getSelectedFile().getPath());
+    }
+
+    private void geraSQL(List<String> listaScripts) {
+        StringBuilder sql = new StringBuilder("select * from epadscriptrodado where nmscript in (");
+        for (String script : listaScripts) {
+            sql.append("'").append(script).append("',");
+        }
+        sql = new StringBuilder(sql.substring(0, sql.length() - 1));
+        sql.append(");");
+        System.out.println(sql);
     }
 }
