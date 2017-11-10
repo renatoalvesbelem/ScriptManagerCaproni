@@ -207,7 +207,7 @@ public class ScriptFolderControl {
 	}
 
 	public ArrayList<String> listaScripts() {
-		ArrayList<String> listaScripts = new ArrayList<>();
+		ArrayList<String> listaScripts = new ArrayList<String>();
 		String nomeScriptDH4;
 		for (File scriptDH4 : file.listFiles()) {
 			if (!(nomeScriptDH4 = scriptDH4.getName()).contains(".xml") || nomeScriptDH4.contains(".log")) {
