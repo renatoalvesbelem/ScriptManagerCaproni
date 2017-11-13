@@ -3,28 +3,31 @@ package br.com.scriptmanagercaproni.model;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@SuppressWarnings("ALL")
 @XmlRootElement(name = "caproniConfig")
 public class CaproniFolderModel {
 
-    private String pathFolder;
-    private String pathScriptFolder;
+    private @SuppressWarnings("deprecation")
+    String pathFolder;
+    private @SuppressWarnings("deprecation")
+    String pathScriptFolder;
 
+    @SuppressWarnings("deprecation")
     @XmlElement(name = "caproniFolder")
     public String getPathFolder() {
         return pathFolder;
     }
 
-    public void setPathFolder(String pathFolder) {
+    public void setPathFolder(@SuppressWarnings("deprecation") String pathFolder) {
         this.pathFolder = pathFolder;
     }
 
     @XmlElement(name = "scriptFolder")
-    public String getPathScriptFolder() {
+    public @SuppressWarnings("deprecation")
+    String getPathScriptFolder() {
         return pathScriptFolder;
     }
 
-    public void setPathScriptFolder(String pathScriptFolder) {
+    public void setPathScriptFolder(@SuppressWarnings("deprecation") String pathScriptFolder) {
         this.pathScriptFolder = pathScriptFolder;
     }
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseList>
+    <database>
+        <databaseAlias>PG5TINT</databaseAlias>
+        <databaseIP>192.168.225.190</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>1521</databasePort>
+        <databaseReplicado>N</databaseReplicado>
+        <databaseSiglaSistema>PG5</databaseSiglaSistema>
+        <databaseType>ORACLE</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>INDTINT</databaseAlias>
+        <databaseIP>192.168.225.190</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>1521</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>IND</databaseSiglaSistema>
+        <databaseType>ORACLE</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>ESTTINT</databaseAlias>
+        <databaseIP>192.168.225.190</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>1521</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>EST</databaseSiglaSistema>
+        <databaseType>ORACLE</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>NETTINT</databaseAlias>
+        <databaseIP>192.168.225.190</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>1521</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>NET</databaseSiglaSistema>
+        <databaseType>ORACLE</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+</databaseList>

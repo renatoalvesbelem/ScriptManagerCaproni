@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<databaseList>
+    <database>
+        <databaseAlias>SG5TINT</databaseAlias>
+        <databaseIP>192.168.225.27</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>57000</databasePort>
+        <databaseReplicado>N</databaseReplicado>
+        <databaseSiglaSistema>SG5</databaseSiglaSistema>
+        <databaseType>DB2</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>INDTINTG</databaseAlias>
+        <databaseIP>192.168.225.27</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>60000</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>INDG</databaseSiglaSistema>
+        <databaseType>DB2</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>SGETINT</databaseAlias>
+        <databaseIP>192.168.225.27</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>58000</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>SGE</databaseSiglaSistema>
+        <databaseType>DB2</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+    <database>
+        <databaseAlias>NETTINTG</databaseAlias>
+        <databaseIP>192.168.225.27</databaseIP>
+        <databasePasswd>agesune1</databasePasswd>
+        <databasePort>59000</databasePort>
+        <databaseReplicado>S</databaseReplicado>
+        <databaseSiglaSistema>NETG</databaseSiglaSistema>
+        <databaseType>DB2</databaseType>
+        <databaseUser>saj</databaseUser>
+    </database>
+</databaseList>
