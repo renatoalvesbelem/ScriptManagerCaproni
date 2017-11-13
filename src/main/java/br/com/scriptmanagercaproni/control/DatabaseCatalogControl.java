@@ -100,7 +100,6 @@ public class DatabaseCatalogControl {
 
 		} else if (s.equals("NET")) {
 			dadoRetornado.add("PG");
-
 		}
 		return dadoRetornado;
 	}

@@ -11,13 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
 public class SQLToolView extends JFrame {
 
     private static final long serialVersionUID = -7439009097407169326L;
     private JTextField txCaproniPath;
 
-    public static void main(String[] args) {
+    public static void main(@SuppressWarnings("deprecation") String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -82,11 +81,13 @@ public class SQLToolView extends JFrame {
         txCaproniPath.setText(chooser.getSelectedFile().getPath());
     }
 
-    private void geraSQL(List<String> listaScripts) {
-        StringBuilder sql = new StringBuilder("select * from epadscriptrodado where nmscript in (");
-        for (String script : listaScripts) {
+    private void geraSQL(@SuppressWarnings("deprecation") List<String> listaScripts) {
+        @SuppressWarnings("deprecation") StringBuilder sql = new StringBuilder("select * from epadscriptrodado where nmscript in (");
+        for (@SuppressWarnings("deprecation") String script : listaScripts) {
             sql.append("'").append(script).append("',");
         }
+
+        //noinspection deprecation
         sql = new StringBuilder(sql.substring(0, sql.length() - 1));
         sql.append(");");
         System.out.println(sql);

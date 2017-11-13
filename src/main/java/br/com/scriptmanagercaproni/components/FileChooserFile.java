@@ -1,6 +1,7 @@
 package br.com.scriptmanagercaproni.components;
 
 import javax.swing.JFileChooser;
+
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooserFile extends JFileChooser {
@@ -9,9 +10,10 @@ public class FileChooserFile extends JFileChooser {
 
 	public FileChooserFile() {
 		this.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		this.setFileFilter(new FileNameExtensionFilter(".ini", "*.ini", "ini"));
-		this.showOpenDialog(null);
 
+        //noinspection deprecation
+        this.setFileFilter(new FileNameExtensionFilter(".ini", "*.ini", "ini"));
+		this.showOpenDialog(null);
 	}
 
 }
