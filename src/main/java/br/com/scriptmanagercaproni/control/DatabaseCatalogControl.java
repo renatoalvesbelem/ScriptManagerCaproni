@@ -17,7 +17,7 @@ import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class DatabaseCatalogControl {
 
-	public void catalogDatabase(File arquivoOrigem, String nameFileDest) {
+	public void catalogDatabase(File arquivoOrigem, @SuppressWarnings("deprecation") String nameFileDest) {
 		ListDatabaseModel listDatabaseModel = new ListDatabaseModel();
 
 		try {
@@ -36,7 +36,7 @@ public class DatabaseCatalogControl {
 
 	}
 
-	private void saveFile(ListDatabaseModel listDatabaseModel, String nameFileDest) {
+	private void saveFile(ListDatabaseModel listDatabaseModel, @SuppressWarnings("deprecation") String nameFileDest) {
 		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_XML_EXT);
 		JOptionPane.showMessageDialog(null, "Dados catalogado com sucesso");
 	}
@@ -45,7 +45,7 @@ public class DatabaseCatalogControl {
 		List<DatabaseModel> listDatabase = new ArrayList<DatabaseModel>();
 		DatabaseModel databaseModel;
 		FileReader reader = new FileReader(arquivoOrigem);
-		String tmp;
+		@SuppressWarnings("deprecation") String tmp;
 		BufferedReader leitor = new BufferedReader(reader);
 
 		while ((tmp = leitor.readLine()) != null) {
@@ -70,7 +70,7 @@ public class DatabaseCatalogControl {
 		return listDatabase;
 	}
 
-	public List<String> getListCatalogFiles(File file) {
+	public @SuppressWarnings("deprecation") List<String> getListCatalogFiles(File file) {
 		List<String> listCatalogFiles = new ArrayList<String>();
 		for (String fileName : file.list()) {
 			listCatalogFiles.add(fileName);
@@ -78,17 +78,18 @@ public class DatabaseCatalogControl {
 		return listCatalogFiles;
 	}
 
-	public boolean deleteDatabaseFile(String nameFile) {
+	public boolean deleteDatabaseFile(@SuppressWarnings("deprecation") String nameFile) {
 		return new File(nameFile + SystemParameter.CAPRONI_XML_EXT).delete();
 	}
 
-	public List<String> returnDateCatalog(String nameFile) {
+	public @SuppressWarnings("deprecation")  List<String> returnDateCatalog(@SuppressWarnings("deprecation")  String nameFile) {
 		ListDatabaseModel listDatabaseModel = (ListDatabaseModel) new XMLToObject(new ListDatabaseModel(),
 				nameFile + SystemParameter.CAPRONI_XML_EXT).instanceObjectParsed();
-		List<String> dadoRetornado = new ArrayList<String>();
+		@SuppressWarnings("deprecation")List<String> dadoRetornado = new ArrayList<String>();
 
+		//noinspection deprecation
 		dadoRetornado.add(listDatabaseModel.getDatabaseModel().get(0).getDatabaseType());
-		String s = listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema();
+		@SuppressWarnings("deprecation") String s = listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema();
 		if (s.equals("SG5")) {
 			dadoRetornado.add("SG");
 
