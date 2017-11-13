@@ -17,91 +17,94 @@ import br.com.scriptmanagercaproni.parameter.SystemParameter;
 
 public class DatabaseCatalogControl {
 
-	public void catalogDatabase(File arquivoOrigem, @SuppressWarnings("deprecation") String nameFileDest) {
-		ListDatabaseModel listDatabaseModel = new ListDatabaseModel();
+    public boolean catalogDatabase(File arquivoOrigem, @SuppressWarnings("deprecation") String nameFileDest) {
+        ListDatabaseModel listDatabaseModel = new ListDatabaseModel();
 
-		try {
-			listDatabaseModel.setDatabaseModel(listaDatabaseModel(arquivoOrigem));
-			if (new File(nameFileDest + SystemParameter.CAPRONI_XML_EXT).exists()) {
-				if (JOptionPane.showConfirmDialog(null, "O arquivo já existe, deseja sobrescrever o catalogo?",
-						"WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					saveFile(listDatabaseModel, nameFileDest);
-				}
-			} else {
-				saveFile(listDatabaseModel, nameFileDest);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            listDatabaseModel.setDatabaseModel(listaDatabaseModel(arquivoOrigem));
+            if (new File(nameFileDest + SystemParameter.CAPRONI_XML_EXT).exists()) {
+                if (JOptionPane.showConfirmDialog(null, "O arquivo já existe, deseja sobrescrever o catalogo?",
+                        "WARNING", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    saveFile(listDatabaseModel, nameFileDest);
+                }
+            } else {
+                saveFile(listDatabaseModel, nameFileDest);
+            }
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
 
-	}
+    }
 
-	private void saveFile(ListDatabaseModel listDatabaseModel, @SuppressWarnings("deprecation") String nameFileDest) {
-		new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_XML_EXT);
-		JOptionPane.showMessageDialog(null, "Dados catalogado com sucesso");
-	}
+    private void saveFile(ListDatabaseModel listDatabaseModel, @SuppressWarnings("deprecation") String nameFileDest) {
+        new ObjectToXML().createXML(listDatabaseModel, nameFileDest + SystemParameter.CAPRONI_XML_EXT);
+        JOptionPane.showMessageDialog(null, "Dados catalogado com sucesso");
+    }
 
-	public List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
-		List<DatabaseModel> listDatabase = new ArrayList<DatabaseModel>();
-		DatabaseModel databaseModel;
-		FileReader reader = new FileReader(arquivoOrigem);
-		@SuppressWarnings("deprecation") String tmp;
-		BufferedReader leitor = new BufferedReader(reader);
+    public List<DatabaseModel> listaDatabaseModel(File arquivoOrigem) throws IOException {
+        List<DatabaseModel> listDatabase = new ArrayList<DatabaseModel>();
+        DatabaseModel databaseModel;
+        FileReader reader = new FileReader(arquivoOrigem);
+        @SuppressWarnings("deprecation") String tmp;
+        BufferedReader leitor = new BufferedReader(reader);
 
-		while ((tmp = leitor.readLine()) != null) {
-			if (!tmp.equals("")) {
-				databaseModel = new DatabaseModel();
-				databaseModel.setDatabaseAlias(tmp);
-				databaseModel.setDatabaseType(leitor.readLine().split("=")[1]);
-				databaseModel.setDatabaseIP(leitor.readLine().split("=")[1]);
-				databaseModel.setDatabasePort(Integer.valueOf(leitor.readLine().split("=")[1]));
-				if ((tmp = leitor.readLine()).equals("Instancia=ISAJ01")) {
-					databaseModel.setDatabaseUser(leitor.readLine().split("=")[1]);
-				} else {
-					databaseModel.setDatabaseUser(tmp.split("=")[1]);
-				}
-				databaseModel.setDatabasePasswd(leitor.readLine().split("=")[1]);
-				databaseModel.setDatabaseSiglaSistema(leitor.readLine().split("=")[1]);
-				databaseModel.setDatabaseReplicado(leitor.readLine().split("=")[1]);
-				listDatabase.add(databaseModel);
-			}
-		}
-		leitor.close();
-		return listDatabase;
-	}
+        while ((tmp = leitor.readLine()) != null) {
+            if (!tmp.equals("")) {
+                databaseModel = new DatabaseModel();
+                databaseModel.setDatabaseAlias(tmp);
+                databaseModel.setDatabaseType(leitor.readLine().split("=")[1]);
+                databaseModel.setDatabaseIP(leitor.readLine().split("=")[1]);
+                databaseModel.setDatabasePort(Integer.valueOf(leitor.readLine().split("=")[1]));
+                if ((tmp = leitor.readLine()).equals("Instancia=ISAJ01")) {
+                    databaseModel.setDatabaseUser(leitor.readLine().split("=")[1]);
+                } else {
+                    databaseModel.setDatabaseUser(tmp.split("=")[1]);
+                }
+                databaseModel.setDatabasePasswd(leitor.readLine().split("=")[1]);
+                databaseModel.setDatabaseSiglaSistema(leitor.readLine().split("=")[1]);
+                databaseModel.setDatabaseReplicado(leitor.readLine().split("=")[1]);
+                listDatabase.add(databaseModel);
+            }
+        }
+        leitor.close();
+        return listDatabase;
+    }
 
-	public @SuppressWarnings("deprecation") List<String> getListCatalogFiles(File file) {
-		List<String> listCatalogFiles = new ArrayList<String>();
-		for (String fileName : file.list()) {
-			listCatalogFiles.add(fileName);
-		}
-		return listCatalogFiles;
-	}
+    public @SuppressWarnings("deprecation")
+    List<String> getListCatalogFiles(File file) {
+        List<String> listCatalogFiles = new ArrayList<String>();
+        for (String fileName : file.list()) {
+            listCatalogFiles.add(fileName);
+        }
+        return listCatalogFiles;
+    }
 
-	public boolean deleteDatabaseFile(@SuppressWarnings("deprecation") String nameFile) {
-		return new File(nameFile + SystemParameter.CAPRONI_XML_EXT).delete();
-	}
+    public boolean deleteDatabaseFile(@SuppressWarnings("deprecation") String nameFile) {
+        return new File(nameFile + SystemParameter.CAPRONI_XML_EXT).delete();
+    }
 
-	public @SuppressWarnings("deprecation")  List<String> returnDateCatalog(@SuppressWarnings("deprecation")  String nameFile) {
-		ListDatabaseModel listDatabaseModel = (ListDatabaseModel) new XMLToObject(new ListDatabaseModel(),
-				nameFile + SystemParameter.CAPRONI_XML_EXT).instanceObjectParsed();
-		@SuppressWarnings("deprecation")List<String> dadoRetornado = new ArrayList<String>();
+    public @SuppressWarnings("deprecation")
+    List<String> returnDateCatalog(@SuppressWarnings("deprecation") String nameFile) {
+        ListDatabaseModel listDatabaseModel = (ListDatabaseModel) new XMLToObject(new ListDatabaseModel(),
+                nameFile + SystemParameter.CAPRONI_XML_EXT).instanceObjectParsed();
+        @SuppressWarnings("deprecation") List<String> dadoRetornado = new ArrayList<String>();
 
-		//noinspection deprecation
-		dadoRetornado.add(listDatabaseModel.getDatabaseModel().get(0).getDatabaseType());
-		@SuppressWarnings("deprecation") String s = listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema();
-		if (s.equals("SG5")) {
-			dadoRetornado.add("SG");
+        //noinspection deprecation
+        dadoRetornado.add(listDatabaseModel.getDatabaseModel().get(0).getDatabaseType());
+        @SuppressWarnings("deprecation") String s = listDatabaseModel.getDatabaseModel().get(0).getDatabaseSiglaSistema();
+        if (s.equals("SG5")) {
+            dadoRetornado.add("SG");
 
-		} else if (s.equals("NETG")) {
-			dadoRetornado.add("SG");
+        } else if (s.equals("NETG")) {
+            dadoRetornado.add("SG");
 
-		} else if (s.equals("PG5")) {
-			dadoRetornado.add("PG");
+        } else if (s.equals("PG5")) {
+            dadoRetornado.add("PG");
 
-		} else if (s.equals("NET")) {
-			dadoRetornado.add("PG");
-		}
-		return dadoRetornado;
-	}
+        } else if (s.equals("NET")) {
+            dadoRetornado.add("PG");
+        }
+        return dadoRetornado;
+    }
 }
